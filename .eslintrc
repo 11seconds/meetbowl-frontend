@@ -10,6 +10,14 @@
 	],
 	"rules": {
 		"react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"import/extensions": "off"
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
 	}
 }
