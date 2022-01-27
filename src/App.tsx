@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CreateTimetable from './pages/CreateTimetable';
-import JoinTimetable from './pages/JoinTimetable';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Timetable from './pages/Timetable';
+import CreateTimetable from 'pages/CreateTimetable';
+import JoinTimetable from 'pages/JoinTimetable';
+import SignIn from 'pages/SignIn';
+import SignUp from 'pages/SignUp';
+import Timetable from 'pages/Timetable';
 
 const App = () => (
   <BrowserRouter>
