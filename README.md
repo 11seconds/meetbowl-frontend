@@ -3,10 +3,17 @@
 ### Stacks
 
 - React
+
   - Styled Components
   - React Query
   - React Router Dom
-- pages.dev
+
+- CI/CD
+  - Github Actions
+
+### Infrastructure
+
+- Cloud Flare Pages
 
 ### Architecture
 
