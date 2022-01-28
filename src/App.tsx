@@ -1,20 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CreateTimetable from 'pages/CreateTimetable';
-import JoinTimetable from 'pages/JoinTimetable';
-import SignIn from 'pages/SignIn';
-import SignUp from 'pages/SignUp';
-import Timetable from 'pages/Timetable';
+import { ThemeProvider } from 'styled-components';
+import themes from 'assets/themes/themes';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import Router from './Router';
 
-const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<CreateTimetable />} />
-      <Route path="/join/:timetableId" element={<JoinTimetable />} />
-      <Route path="/timetable/:timetableId" element={<Timetable />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/sign-up" element={<SignUp />} />
-    </Routes>
-  </BrowserRouter>
-);
+const App = () => {
+  const queryClient = new QueryClient();
+
+  return (
+    <ThemeProvider theme={themes.light}>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
+};
 
 export default App;
