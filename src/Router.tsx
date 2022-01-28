@@ -5,6 +5,7 @@ import JoinTimetable from 'pages/JoinTimetable';
 import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
 import Timetable from 'pages/Timetable';
+import Authorization from 'pages/Authorization';
 
 const Router = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const Router = () => (
       <Route path="/timetable/:timetableId" element={<Timetable />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/authorization" element={<Authorization />} />
     </Routes>
   </BrowserRouter>
 );
