@@ -33,7 +33,7 @@ const Button = styled.button<{
   ${(props) =>
     props.inline
       ? css`
-          width: default;
+          width: auto;
           display: inline-block;
           padding-left: 18px;
           padding-right: 18px;
