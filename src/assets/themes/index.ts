@@ -15,6 +15,7 @@ const light: DefaultTheme = {
       disabled: '#DEDEDE',
       placeholder: '#D8D8D8',
       timetableLine: '#EEEEEE',
+      textFieldBorder: '#EEEEEE',
       kakaoBackground: '#FEE500',
       kakaoText: '#525252',
     },

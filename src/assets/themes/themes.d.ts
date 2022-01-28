@@ -15,6 +15,7 @@ declare module 'styled-components' {
       specific: {
         disabled: string;
         placeholder: string;
+        textFieldBorder: string;
         timetableLine: string;
         kakaoBackground: string;
         kakaoText: string;
