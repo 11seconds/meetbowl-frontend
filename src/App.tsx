@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import themes from 'assets/themes/themes';
+import themes from 'assets/themes';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import Router from './Router';
 
