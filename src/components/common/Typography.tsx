@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
 type SizeType = 'xl' | 'lg' | 'base' | 'sm';
-type WeightType = 300 | 400 | 500;
+type WeightType = 'regular' | 'medium' | 'bold';
 
 const Typography = styled.div<{ size?: SizeType; weight?: WeightType }>`
-  font-weight: ${(props) => props.weight || 400};
+  font-weight: 400;
   font-size: 16px;
 
   ${(props) =>
@@ -30,6 +30,24 @@ const Typography = styled.div<{ size?: SizeType; weight?: WeightType }>`
     css`
       font-size: 13px;
     `};
+
+  ${(props) =>
+    props.weight === 'regular' &&
+    css`
+      font-weight: 400;
+    `}
+
+  ${(props) =>
+    props.weight === 'medium' &&
+    css`
+      font-weight: 500;
+    `}
+
+${(props) =>
+    props.weight === 'bold' &&
+    css`
+      font-weight: 700;
+    `}
 `;
 
 export default Typography;

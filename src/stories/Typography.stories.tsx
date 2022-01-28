@@ -13,6 +13,8 @@ export const BaseTypography = () => <Typography size="base">Base Typography</Typ
 
 export const SmallTypography = () => <Typography size="sm">Small Typography</Typography>;
 
-export const Weight300Typography = () => <Typography weight={300}>Thin Typography</Typography>;
+export const RegularWeightTypography = () => <Typography weight="regular">Regular Typography</Typography>;
 
-export const Weight500Typography = () => <Typography weight={500}>Bold Typography</Typography>;
+export const MediumWeightTypography = () => <Typography weight="medium">Medium Typography</Typography>;
+
+export const BoldWeightTypography = () => <Typography weight="bold">Bold Typography</Typography>;
