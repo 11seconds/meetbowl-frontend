@@ -1,15 +1,24 @@
-import styled from 'styled-components';
-
-const Button = styled.button<{ color?: string }>`
-  background-color: ${(props) => props.color};
-`;
+import Button from 'components/common/Button';
 
 export default {
   title: 'Button',
   component: Button,
 };
 
-export const Default = () => <Button>Default</Button>;
-export const Red = () => <Button color="red">Red</Button>;
-export const Green = () => <Button color="green">Green</Button>;
-export const Blue = () => <Button color="blue">Blue</Button>;
+export const LargeButton = () => (
+  <Button color="red" size="lg">
+    Large Button
+  </Button>
+);
+
+export const SmallButton = () => (
+  <Button color="red" size="sm">
+    Small Button
+  </Button>
+);
+
+export const InlineButton = () => (
+  <Button color="red" size="sm" inline>
+    Inline Button
+  </Button>
+);

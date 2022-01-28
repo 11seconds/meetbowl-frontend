@@ -1,6 +1,9 @@
 import { DefaultTheme } from 'styled-components';
 
 const light: DefaultTheme = {
+  sizes: {
+    borderRadius: '5px',
+  },
   colors: {
     generic: {
       primaryBlack: '#232323',
@@ -12,6 +15,7 @@ const light: DefaultTheme = {
       disabled: '#DEDEDE',
       placeholder: '#D8D8D8',
       timetableLine: '#EEEEEE',
+      textFieldBorder: '#EEEEEE',
       kakaoBackground: '#FEE500',
       kakaoText: '#525252',
     },
