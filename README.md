@@ -1,4 +1,4 @@
-## meetbowl frontend
+# meetbowl frontend
 
 ### Stacks
 
@@ -9,7 +9,11 @@
   - React Router Dom
 
 - CI/CD
+
   - Github Actions
+
+- CDD (Component Driven Development)
+  - Storybook
 
 ### Infrastructure
 
@@ -24,3 +28,26 @@
 - utils : 유틸 함수
 - assets : 이미지, 폰트 등
 - constants : 상수
+
+### Getting Started
+
+#### Run dev server
+
+```
+$ npm run start
+```
+
+#### Lint & Prettier
+
+```
+$ npm run lint
+$ npm run lint:fix
+$ npm run prettier
+$ npm run prettier:fix
+```
+
+#### Storybook
+
+```
+$ npm run storybook
+```
