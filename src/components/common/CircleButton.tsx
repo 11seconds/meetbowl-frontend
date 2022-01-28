@@ -7,7 +7,7 @@ type CircleButtonWrapper = {
   color: ColorType;
 };
 
-type CircleButton = {
+type CircleButtonProps = {
   color: ColorType;
   icon: 'share'; // 현재는 단일 아이콘
 };
@@ -36,7 +36,7 @@ const CircleButtonWrapper = styled.button<CircleButtonWrapper>`
     `}
 `;
 
-const CircleButton = ({ color, icon }: CircleButton) => (
+const CircleButton = ({ color, icon }: CircleButtonProps) => (
   <CircleButtonWrapper color={color}>{icon === 'share' && <MdOutlineIosShare />}</CircleButtonWrapper>
 );
 
