@@ -3,7 +3,7 @@ import { MdOutlineIosShare } from 'react-icons/md';
 
 type ColorType = 'red'; // 현재는 단일 색상
 
-type CircleButtonWrapper = {
+type CircleButtonWrapperProps = {
   color: ColorType;
 };
 
@@ -12,7 +12,7 @@ type CircleButtonProps = {
   icon: 'share'; // 현재는 단일 아이콘
 };
 
-const CircleButtonWrapper = styled.button<CircleButtonWrapper>`
+const CircleButtonWrapper = styled.button<CircleButtonWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
