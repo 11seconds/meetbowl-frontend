@@ -1,5 +1,5 @@
 import axios from 'utils/customAxios';
-import * as TimetableDto from './dtos/TimetableDto';
+import { TimetableDto } from './dtos';
 
 export const getTimetable = async (timetableId: string) => {
   const res = await axios.get<TimetableDto.Response>(`/timetables/${timetableId}`);
