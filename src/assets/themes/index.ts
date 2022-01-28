@@ -1,6 +1,9 @@
 import { DefaultTheme } from 'styled-components';
 
 const light: DefaultTheme = {
+  sizes: {
+    borderRadius: '5px',
+  },
   colors: {
     generic: {
       primaryBlack: '#232323',

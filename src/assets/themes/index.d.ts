@@ -2,6 +2,9 @@ import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
+    sizes: {
+      borderRadius: '5px';
+    };
     colors: {
       generic: {
         primaryBlack: string;
