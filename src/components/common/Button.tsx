@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 // 현재는 단일 색상
 type ColorType = 'red';
-type ButtonSize = 'large' | 'small';
+type ButtonSize = 'lg' | 'sm';
 
 const Button = styled.button<{
   color: ColorType;
@@ -17,14 +17,14 @@ const Button = styled.button<{
   cursor: pointer;
 
   ${(props) =>
-    props.size === 'large' &&
+    props.size === 'lg' &&
     css`
       height: 57px;
       font-size: 18px;
     `}
 
   ${(props) =>
-    props.size === 'small' &&
+    props.size === 'sm' &&
     css`
       height: 33px;
       font-size: 14px;
