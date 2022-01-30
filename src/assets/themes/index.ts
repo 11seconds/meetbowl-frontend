@@ -18,6 +18,7 @@ const light: DefaultTheme = {
       textFieldBorder: '#EEEEEE',
       kakaoBackground: '#FEE500',
       kakaoText: '#191600',
+      submitterNameText: '#7A7A7A',
     },
   },
 };
