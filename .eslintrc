@@ -14,6 +14,8 @@
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "warn",
+    "react/jsx-props-no-spreading": "off",
+
     "react/function-component-definition": [
       2,
       {
