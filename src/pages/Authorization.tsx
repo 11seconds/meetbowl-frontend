@@ -19,8 +19,8 @@ const Authorization = () => {
   );
 
   useEffect(() => {
-    if (data?.access_token) {
-      storeToken(data.access_token);
+    if (data?.accessToken) {
+      storeToken(data.accessToken);
       navigate('/sign-up');
     }
   }, [data, navigate]);

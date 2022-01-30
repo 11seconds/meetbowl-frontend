@@ -14,7 +14,7 @@ export const createTimetable = async ({
   const res = await axios.post<TimetableDto.Response>('/timetable', {
     title,
     description,
-    create_user_id: createUserId,
+    createUserId,
   });
   return res.data;
 };

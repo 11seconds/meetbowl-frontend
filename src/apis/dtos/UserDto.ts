@@ -3,6 +3,6 @@ export type KakaoLoginRequest = {
 };
 
 export type KakaoLoginResponse = {
-  access_token: string;
-  token_type: string;
+  accessToken: string;
+  tokenType: string;
 };
