@@ -1,7 +1,7 @@
 import CircleButton from 'components/common/CircleButton';
 
 export default {
-  title: 'Circle Button',
+  title: 'common/CircleButton',
   component: CircleButton,
 };
 

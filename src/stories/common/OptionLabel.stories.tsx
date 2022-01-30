@@ -1,7 +1,7 @@
 import OptionLabel from 'components/common/OptionLabel';
 
 export default {
-  title: 'Option Label',
+  title: 'common/Option Label',
   component: OptionLabel,
 };
 

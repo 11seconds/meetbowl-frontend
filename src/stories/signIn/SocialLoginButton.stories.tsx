@@ -1,7 +1,7 @@
 import SocialLoginButton from 'components/signIn/SocialLoginButton';
 
 export default {
-  title: 'Social Login Button',
+  title: 'signIn/Social Login Button',
   component: SocialLoginButton,
 };
 

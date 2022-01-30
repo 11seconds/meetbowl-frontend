@@ -1,7 +1,7 @@
 import ScreenSpinner from 'components/common/ScreenSpinner';
 
 export default {
-  title: 'Screen Spinner',
+  title: 'common/Screen Spinner',
   component: ScreenSpinner,
 };
 
