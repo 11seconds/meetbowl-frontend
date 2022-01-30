@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import { getAccessToken } from './token';
 
@@ -23,7 +23,7 @@ customAxios.interceptors.request.use(
       data: decamelizedData,
     };
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
@@ -39,7 +39,12 @@ customAxios.interceptors.response.use(
       data: camelizedData,
     };
   },
-  (error) => {
+  (error: AxiosError) => {
+    // access token 인증 실패 시 /sign-in 으로 fallback
+    if (error.response?.status === 401) {
+      localStorage.clear();
+      window.location.href = '/sign-in';
+    }
     return Promise.reject(error);
   }
 );
