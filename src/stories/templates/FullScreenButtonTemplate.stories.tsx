@@ -1,11 +1,11 @@
 import MobileScreen from 'components/common/MobileScreen';
 import SocialLoginButton from 'components/signIn/SocialLoginButton';
-import FullScreenButtonTemplate from 'components/common/templates/FullScreenButtonTemplate';
+import FullScreenButtonTemplate from 'components/templates/FullScreenButtonTemplate';
 
 import meetbowlLogo from 'assets/images/logos/meetbowl.svg';
 
 export default {
-  title: 'common/templates/FullScreenButtonTemplate',
+  title: 'templates/Full Screen Button Template',
   component: FullScreenButtonTemplate,
 };
 
