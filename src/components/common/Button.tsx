@@ -19,7 +19,7 @@ const Button = styled.button<{
   ${(props) =>
     props.size === 'lg' &&
     css`
-      height: 57px;
+      height: 50px;
       font-size: 18px;
     `}
 
