@@ -19,6 +19,7 @@ declare module 'styled-components' {
         timetableLine: string;
         kakaoBackground: string;
         kakaoText: string;
+        submitterNameText: string;
       };
     };
   }

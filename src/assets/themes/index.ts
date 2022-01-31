@@ -17,7 +17,8 @@ const light: DefaultTheme = {
       timetableLine: '#EEEEEE',
       textFieldBorder: '#EEEEEE',
       kakaoBackground: '#FEE500',
-      kakaoText: '#525252',
+      kakaoText: '#191600',
+      submitterNameText: '#7A7A7A',
     },
   },
 };

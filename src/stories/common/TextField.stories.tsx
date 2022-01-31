@@ -1,7 +1,7 @@
 import TextField from 'components/common/TextField';
 
 export default {
-  title: 'Text Field',
+  title: 'common/Text Field',
   component: TextField,
 };
 
