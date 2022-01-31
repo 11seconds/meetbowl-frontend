@@ -16,6 +16,7 @@ const Wrapper = styled.div<Pick<MobileScreenProps, 'color'>>`
 `;
 
 const MobileWidth = styled.div`
+  height: 100%;
   margin: 0 auto;
   max-width: 576px;
 `;
