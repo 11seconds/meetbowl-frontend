@@ -9,6 +9,7 @@ type SubmitterNameProps = {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  height: 30px;
 `;
 
 const Color = styled.div<Pick<SubmitterNameProps, 'color'>>`
@@ -23,7 +24,7 @@ const Name = styled.div<Pick<SubmitterNameProps, 'highlighted' | 'color'>>`
   display: inline-block;
   position: relative;
   top: 1px;
-  width: 100px;
+  max-width: 80px;
   font-size: 13px;
   color: ${(props) => props.theme.colors.specific.submitterNameText};
   white-space: no-wrap;
