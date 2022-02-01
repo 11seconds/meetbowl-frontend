@@ -1,10 +1,10 @@
-import BottomSheet from 'components/timeTable/BottomSheet';
-import NameGrid from 'components/timeTable/NameGrid';
-import SubmitterName from 'components/timeTable/SubmitterName';
+import BottomSheet from 'components/timetable/BottomSheet';
+import NameGrid from 'components/timetable/NameGrid';
+import SubmitterName from 'components/timetable/SubmitterName';
 import Typography from 'components/common/Typography';
 
 export default {
-  title: 'timeTable/BottomSheet',
+  title: 'timetable/BottomSheet',
   component: BottomSheet,
 };
 

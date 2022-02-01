@@ -1,8 +1,8 @@
-import NameGrid from 'components/timeTable/NameGrid';
-import SubmitterName from 'components/timeTable/SubmitterName';
+import NameGrid from 'components/timetable/NameGrid';
+import SubmitterName from 'components/timetable/SubmitterName';
 
 export default {
-  title: 'timeTable/Name Grid',
+  title: 'timetable/Name Grid',
   component: NameGrid,
 };
 
