@@ -17,6 +17,7 @@ declare module 'styled-components' {
         placeholder: string;
         textFieldBorder: string;
         timetableLine: string;
+        timetableCellNumber: string;
         kakaoBackground: string;
         kakaoText: string;
         submitterNameText: string;
