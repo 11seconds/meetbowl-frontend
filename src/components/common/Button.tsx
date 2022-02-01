@@ -11,7 +11,6 @@ const Button = styled.button<{
 }>`
   border: none;
   border-radius: ${(props) => props.theme.sizes.borderRadius};
-  font-weight: bold;
   cursor: pointer;
 
   ${(props) =>
@@ -26,13 +25,16 @@ const Button = styled.button<{
     css`
       height: 50px;
       font-size: 16px;
+      font-weight: 700;
     `}
 
   ${(props) =>
     props.size === 'sm' &&
     css`
+      padding: 0 18px;
       height: 33px;
       font-size: 14px;
+      font-weight: 500;
     `}
 
   ${(props) =>
