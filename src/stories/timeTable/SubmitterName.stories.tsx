@@ -1,7 +1,7 @@
-import SubmitterName from 'components/timeTable/SubmitterName';
+import SubmitterName from 'components/timetable/SubmitterName';
 
 export default {
-  title: 'timeTable/Submitter Name',
+  title: 'timetable/Submitter Name',
   component: SubmitterName,
 };
 
