@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
+type TimetableTemplateProps = {
+  header: JSX.Element;
+  timetable: JSX.Element;
+  bottomSheet: JSX.Element;
+};
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-between;
   height: 100%;
-  padding: 56px 30px;
 `;
 
 const Header = styled.div`
@@ -14,25 +19,17 @@ const Header = styled.div`
 `;
 
 const Timetable = styled.div`
-  height: calc(100% - 133px);
+  flex-grow: 1;
+  overflow: scroll;
 `;
 
-const BottomSheet = styled.div`
-  height: 68px;
-`;
+const BottomSheet = styled.div``;
 
-type TimetableTemplateProps = {
-  header: JSX.Element;
-  timetable: JSX.Element;
-  bottomSheet: JSX.Element;
-};
-
-const FullScreenButtonTemplate = ({ header, timetable, bottomSheet }: TimetableTemplateProps) => (
+const TimetableTemplate = ({ header, timetable, bottomSheet }: TimetableTemplateProps) => (
   <Wrapper>
     <Header>{header}</Header>
     <Timetable>{timetable}</Timetable>
     <BottomSheet>{bottomSheet}</BottomSheet>
   </Wrapper>
 );
-
-export default FullScreenButtonTemplate;
+export default TimetableTemplate;
