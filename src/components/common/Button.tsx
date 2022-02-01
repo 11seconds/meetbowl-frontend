@@ -5,29 +5,36 @@ type ColorType = 'red';
 type ButtonSize = 'lg' | 'sm';
 
 const Button = styled.button<{
-  color: ColorType;
-  size: ButtonSize;
+  color?: ColorType;
+  size?: ButtonSize;
   inline?: boolean;
 }>`
   border: none;
   border-radius: ${(props) => props.theme.sizes.borderRadius};
-  background-color: ${(props) => props.theme.colors.generic.primaryRed};
-  color: #ffffff;
-  font-weight: bold;
   cursor: pointer;
+
+  ${(props) =>
+    props.color === 'red' &&
+    css`
+      background-color: ${props.theme.colors.generic.primaryRed};
+      color: #ffffff;
+    `}
 
   ${(props) =>
     props.size === 'lg' &&
     css`
-      height: 57px;
-      font-size: 18px;
+      height: 50px;
+      font-size: 16px;
+      font-weight: 700;
     `}
 
   ${(props) =>
     props.size === 'sm' &&
     css`
+      padding: 0 18px;
       height: 33px;
       font-size: 14px;
+      font-weight: 500;
     `}
 
   ${(props) =>
@@ -43,5 +50,10 @@ const Button = styled.button<{
           display: block;
         `}
 `;
+
+Button.defaultProps = {
+  color: 'red',
+  size: 'lg',
+};
 
 export default Button;

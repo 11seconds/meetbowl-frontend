@@ -3,6 +3,7 @@ import kakaoIcon from 'assets/images/logos/kakao-black.svg';
 
 type SocialLoginButtonProps = {
   social: 'kakao';
+  onClick?: () => void;
 };
 
 const ButtonWrapper = styled.button<Pick<SocialLoginButtonProps, 'social'>>`
@@ -32,7 +33,7 @@ const SocialIcon = styled.img`
   height: 20px;
 `;
 
-const SocialLoginButton = ({ social }: SocialLoginButtonProps) => {
+const SocialLoginButton = ({ social, onClick }: SocialLoginButtonProps) => {
   let socialName;
   if (social === 'kakao') socialName = '카카오';
 
@@ -40,11 +41,15 @@ const SocialLoginButton = ({ social }: SocialLoginButtonProps) => {
   if (social === 'kakao') socialIcon = kakaoIcon;
 
   return (
-    <ButtonWrapper social={social}>
+    <ButtonWrapper social={social} onClick={() => onClick && onClick()}>
       <SocialIcon src={socialIcon} />
       {socialName}로 시작하기
     </ButtonWrapper>
   );
+};
+
+SocialLoginButton.defaultProps = {
+  onClick: null,
 };
 
 export default SocialLoginButton;
