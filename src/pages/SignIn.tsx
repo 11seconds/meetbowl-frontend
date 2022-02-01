@@ -1,3 +1,9 @@
+import MobileScreen from 'components/common/MobileScreen';
+import FullScreenButtonTemplate from 'components/templates/FullScreenButtonTemplate';
+import SocialLoginButton from 'components/signIn/SocialLoginButton';
+
+import meetbowlLogo from 'assets/images/logos/meetbowl.svg';
+
 const SignIn = () => {
   const kakaoLogin = () => {
     const { Kakao } = window;
@@ -7,11 +13,12 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={kakaoLogin}>
-        카카오 로그인
-      </button>
-    </div>
+    <MobileScreen color="red">
+      <FullScreenButtonTemplate
+        content={<img src={meetbowlLogo} alt="logo" />}
+        button={<SocialLoginButton social="kakao" onClick={kakaoLogin} />}
+      />
+    </MobileScreen>
   );
 };
 

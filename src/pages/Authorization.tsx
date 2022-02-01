@@ -5,6 +5,10 @@ import { useQuery } from 'react-query';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { storeToken } from 'utils/token';
 
+import MobileScreen from 'components/common/MobileScreen';
+import ScreenSpinner from 'components/common/ScreenSpinner';
+import FullScreenCenterTemplate from 'components/templates/FullScreenCenterTemplate';
+
 const Authorization = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -25,7 +29,13 @@ const Authorization = () => {
     }
   }, [data, navigate]);
 
-  if (isLoading) return <>authorizing...</>;
+  if (isLoading)
+    return (
+      <MobileScreen>
+        <FullScreenCenterTemplate content={<ScreenSpinner />} />
+      </MobileScreen>
+    );
+
   if (isError) return <>error: {error?.message}</>;
   if (!data) return <> data is empty </>;
   return <>redirecting...</>;
