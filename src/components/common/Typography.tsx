@@ -44,7 +44,7 @@ const Typography = styled.div<{ size?: SizeType; weight?: WeightType }>`
       font-weight: 500;
     `}
 
-${(props) =>
+  ${(props) =>
     props.weight === 'bold' &&
     css`
       font-weight: 700;
