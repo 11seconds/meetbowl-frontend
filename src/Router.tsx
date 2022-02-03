@@ -16,7 +16,7 @@ type PrivateRouteProps = {
 const AuthRequired = ({ children }: PrivateRouteProps): JSX.Element => {
   const jwt = getAccessToken();
 
-  if (!isTokenExisting() || isTokenValid(jwt)) {
+  if (!isTokenExisting() || !isTokenValid(jwt)) {
     return <Navigate to="/sign-in" />;
   }
 
