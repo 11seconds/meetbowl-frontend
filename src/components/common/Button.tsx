@@ -8,15 +8,24 @@ const Button = styled.button<{
   color?: ColorType;
   size?: ButtonSize;
   inline?: boolean;
+  disabled?: boolean;
 }>`
   border: none;
   border-radius: ${(props) => props.theme.sizes.borderRadius};
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 
   ${(props) =>
     props.color === 'red' &&
     css`
       background-color: ${props.theme.colors.generic.primaryRed};
+      color: #ffffff;
+    `}
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: ${props.theme.colors.specific.disabled};
       color: #ffffff;
     `}
 
