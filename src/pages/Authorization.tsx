@@ -16,7 +16,7 @@ const Authorization = () => {
 
   const { isLoading, isError, data, error } = useQuery<UserDto.KakaoLoginResponse, Error>(
     'kakaoLogin',
-    () => user.kakaoLogin({ code }),
+    () => user.kakaoLogin({ code, redirectUri: `${process.env.REACT_APP_KAKAO_REDIRECT_HOST}/authorization` }),
     {
       retry: 0,
     }

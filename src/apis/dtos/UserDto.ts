@@ -1,5 +1,6 @@
 export type KakaoLoginRequest = {
   code: string | null;
+  redirectUri: string;
 };
 
 export type KakaoLoginResponse = {
