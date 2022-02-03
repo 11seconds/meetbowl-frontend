@@ -8,7 +8,6 @@ export type Response = {
 export type CreateRequest = {
   title: string;
   description: string;
-  createUserId: string;
 };
 
 export type UpdateRequest = {

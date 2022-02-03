@@ -16,6 +16,15 @@ export const kakaoLogin = async ({
   }
 };
 
+export const getCurrentUser = async (): Promise<UserDto.Response> => {
+  try {
+    return (await axios.get('/users/me')).data;
+  } catch (error) {
+    const serverError = error as AxiosError;
+    throw new Error(serverError.response?.data.detail);
+  }
+};
+
 export const updateNickname = async (nickname: string) => {
   try {
     await axios.patch('/users/me', { nickname });

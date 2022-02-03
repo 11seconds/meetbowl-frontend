@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useMutation } from 'react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { user } from 'apis';
 
 import MobileScreen from 'components/common/MobileScreen';
@@ -8,9 +9,16 @@ import Button from 'components/common/Button';
 import TextField from 'components/common/TextField';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [nickname, setNickname] = useState('');
 
   const mutation = useMutation(() => {
+    const redirectPath = searchParams.get('redirect');
+
+    if (redirectPath) navigate(redirectPath);
+    else navigate('/');
+
     return user.updateNickname(nickname);
   });
 
