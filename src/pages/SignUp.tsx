@@ -1,6 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import useCurrentUser from 'hooks/useCurrentUser';
 import { user } from 'apis';
 
 import MobileScreen from 'components/common/MobileScreen';
@@ -11,6 +13,8 @@ import TextField from 'components/common/TextField';
 const SignUp = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  const { isLoading, isActive } = useCurrentUser();
   const [nickname, setNickname] = useState('');
 
   const mutation = useMutation(() => {
@@ -26,6 +30,13 @@ const SignUp = () => {
     if (nickname.length === 0) return true;
     return false;
   }, [nickname]);
+
+  // 이미 activated 된 유저 fallback
+  useEffect(() => {
+    if (!isLoading && isActive) {
+      navigate('/');
+    }
+  }, [navigate, isLoading, isActive]);
 
   return (
     <MobileScreen>
