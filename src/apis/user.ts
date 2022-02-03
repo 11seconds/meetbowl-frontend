@@ -8,8 +8,26 @@ export const kakaoLogin = async ({
   redirectUri,
 }: UserDto.KakaoLoginRequest): Promise<UserDto.KakaoLoginResponse> => {
   try {
-    const res = await axios.post<UserDto.KakaoLoginResponse>('/user/login', { code, redirectUri });
+    const res = await axios.post<UserDto.KakaoLoginResponse>('/users/login', { code, redirectUri });
     return res.data;
+  } catch (error) {
+    const serverError = error as AxiosError;
+    throw new Error(serverError.response?.data.detail);
+  }
+};
+
+export const getCurrentUser = async (): Promise<UserDto.Response> => {
+  try {
+    return (await axios.get('/users/me')).data;
+  } catch (error) {
+    const serverError = error as AxiosError;
+    throw new Error(serverError.response?.data.detail);
+  }
+};
+
+export const updateNickname = async (nickname: string) => {
+  try {
+    await axios.patch('/users/me', { nickname });
   } catch (error) {
     const serverError = error as AxiosError;
     throw new Error(serverError.response?.data.detail);

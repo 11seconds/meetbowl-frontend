@@ -19,5 +19,5 @@ export const isTokenValid = (accessToken: string): boolean => {
   const decoded = jwtDecode<JwtPayload>(accessToken);
 
   if (!decoded.exp) return false;
-  return Date.now() >= decoded.exp * 1000;
+  return decoded.exp * 1000 >= Date.now();
 };

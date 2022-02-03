@@ -13,7 +13,7 @@ export const createScheduleBlock = async ({
   label,
   userId,
 }: ScheduleBlockDto.CreateRequest): Promise<ScheduleBlockDto.Response[]> => {
-  const res = await axios.post<ScheduleBlockDto.Response[]>('/scheduleblock', {
+  const res = await axios.post<ScheduleBlockDto.Response[]>('/scheduleblocks', {
     tableId,
     startDatetime,
     endDatetime,
@@ -30,7 +30,7 @@ export const updateScheduleBlock = async ({
   label,
   userId,
 }: ScheduleBlockDto.UpdateRequest): Promise<ScheduleBlockDto.Response[]> => {
-  const res = await axios.put<ScheduleBlockDto.Response[]>('/scheduleblock', {
+  const res = await axios.put<ScheduleBlockDto.Response[]>('/scheduleblocks', {
     tableId,
     startDatetime,
     endDatetime,

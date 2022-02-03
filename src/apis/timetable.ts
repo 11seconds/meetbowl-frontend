@@ -9,12 +9,10 @@ export const getTimetable = async (timetableId: string): Promise<TimetableDto.Re
 export const createTimetable = async ({
   title,
   description,
-  createUserId,
 }: TimetableDto.CreateRequest): Promise<TimetableDto.Response> => {
-  const res = await axios.post<TimetableDto.Response>('/timetable', {
+  const res = await axios.post<TimetableDto.Response>('/timetables', {
     title,
     description,
-    createUserId,
   });
   return res.data;
 };
@@ -22,6 +20,6 @@ export const createTimetable = async ({
 export const updateTimetable = async (
   updateTimetableRequestDto: TimetableDto.UpdateRequest
 ): Promise<TimetableDto.Response> => {
-  const res = await axios.put<TimetableDto.Response>('/timetable', updateTimetableRequestDto);
+  const res = await axios.put<TimetableDto.Response>('/timetables', updateTimetableRequestDto);
   return res.data;
 };
