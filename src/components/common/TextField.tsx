@@ -12,6 +12,7 @@ const TextField = styled.input.attrs({
   width: ${(props) => props.width}px;
   border: none;
   border-bottom: 2px solid ${(props) => props.theme.colors.specific.textFieldBorder};
+  border-radius: 0;
   color: ${(props) => props.theme.colors.generic.primaryBlack};
   font-size: 18px;
   font-weight: 700;
@@ -22,5 +23,10 @@ const TextField = styled.input.attrs({
     color: ${(props) => props.theme.colors.specific.placeholder};
   }
 `;
+
+TextField.defaultProps = {
+  align: 'left',
+  width: 200,
+};
 
 export default TextField;
