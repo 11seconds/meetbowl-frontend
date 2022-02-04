@@ -11,8 +11,7 @@ export type CreateRequest = {
 };
 
 export type UpdateRequest = {
-  id: string;
+  timetableId: string;
   title: string;
   description?: string;
-  createUserId: string;
 };
