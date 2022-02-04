@@ -9,6 +9,7 @@ import MobileScreen from 'components/common/MobileScreen';
 import FullScreenButtonTemplate from 'components/templates/FullScreenButtonTemplate';
 import Button from 'components/common/Button';
 import TextField from 'components/common/TextField';
+import ScreenSpinner from 'components/common/ScreenSpinner';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ const SignUp = () => {
       navigate('/');
     }
   }, [navigate, isLoading, isActive]);
+
+  if (isLoading) return <ScreenSpinner />;
 
   return (
     <MobileScreen>

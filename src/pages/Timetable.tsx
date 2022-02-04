@@ -14,6 +14,7 @@ import Margin from 'components/common/Margin';
 import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
 import Timetable from 'components/timetable/Timetable';
+import ScreenSpinner from 'components/common/ScreenSpinner';
 
 const TimetablePage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ const TimetablePage = () => {
       navigate(`/sign-up?redirect=/timetable/${timetableId}`);
     }
   }, [navigate, isLoading, isActive, timetableId]);
+
+  if (isLoading) return <ScreenSpinner />;
 
   return (
     <TimetableTemplate
