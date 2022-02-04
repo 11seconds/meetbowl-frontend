@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-query';
+
+import { ScheduleBlockDto, TimetableDto } from 'apis/dtos';
+import { scheduleBlock, timetable } from 'apis';
 
 import useCurrentUser from 'hooks/useCurrentUser';
 
@@ -15,29 +19,54 @@ import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
 import Timetable from 'components/timetable/Timetable';
 import ScreenSpinner from 'components/common/ScreenSpinner';
+import Title from 'components/timetable/Title';
 
 const TimetablePage = () => {
   const navigate = useNavigate();
   const { timetableId } = useParams();
-  const { isLoading, isActive } = useCurrentUser();
+  const { isLoading: isCurrentUserLoading, isActive } = useCurrentUser();
+
+  const {
+    isLoading: isTimetableLoading,
+    isError: isTimetableError,
+    data: timetableData,
+    refetch: refetchTimetable,
+  } = useQuery<TimetableDto.Response | null, Error>('getTimetable', () =>
+    timetable.getTimetable(timetableId as string)
+  );
+
+  const {
+    isLoading: isScheduleBlocksLoading,
+    isError: isScheduleBlocksError,
+    // data: scheduleBlocksData,
+  } = useQuery<ScheduleBlockDto.Response[] | null, Error>('getSchedulblocks', () =>
+    scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string)
+  );
+
+  const mutation = useMutation(async (title: string) => {
+    await timetable.updateTimetable({ timetableId: timetableId as string, title });
+    refetchTimetable();
+  });
 
   useEffect(() => {
-    if (!isLoading && !isActive) {
+    if (!isCurrentUserLoading && !isActive) {
       navigate(`/sign-up?redirect=/timetable/${timetableId}`);
     }
-  }, [navigate, isLoading, isActive, timetableId]);
+  }, [navigate, isCurrentUserLoading, isActive, timetableId]);
 
-  if (isLoading) return <ScreenSpinner />;
+  useEffect(() => {
+    if (isTimetableError || isScheduleBlocksError) {
+      navigate('/');
+    }
+  }, [navigate, isTimetableError, isScheduleBlocksError]);
+
+  if (isTimetableLoading || isScheduleBlocksLoading || isCurrentUserLoading) return <ScreenSpinner />;
 
   return (
     <TimetableTemplate
       header={
         <Header
-          title={
-            <Typography size="lg" weight="bold">
-              불가능한 시간 선택
-            </Typography>
-          }
+          title={<Title title={timetableData?.title || ''} onChange={(title) => mutation.mutate(title)} />}
           menu={<Button size="sm"> 저장 </Button>}
         />
       }

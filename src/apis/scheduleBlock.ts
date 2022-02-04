@@ -1,8 +1,8 @@
 import axios from 'utils/customAxios';
 import { ScheduleBlockDto } from './dtos';
 
-export const getScheduleBlocksByTimetableId = async (timetableId: string): Promise<ScheduleBlockDto.Response> => {
-  const res = await axios.get<ScheduleBlockDto.Response>(`/timetables/${timetableId}/scheduleblocks`);
+export const getScheduleBlocksByTimetableId = async (timetableId: string): Promise<ScheduleBlockDto.Response[]> => {
+  const res = await axios.get<ScheduleBlockDto.Response[]>(`/timetables/${timetableId}/scheduleblocks`);
   return res.data;
 };
 

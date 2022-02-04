@@ -17,9 +17,15 @@ export const createTimetable = async ({
   return res.data;
 };
 
-export const updateTimetable = async (
-  updateTimetableRequestDto: TimetableDto.UpdateRequest
-): Promise<TimetableDto.Response> => {
-  const res = await axios.put<TimetableDto.Response>('/timetables', updateTimetableRequestDto);
+export const updateTimetable = async ({
+  timetableId,
+  title,
+  description,
+}: TimetableDto.UpdateRequest): Promise<TimetableDto.Response> => {
+  const res = await axios.patch<TimetableDto.Response>(`/timetables/${timetableId}`, {
+    timetableId,
+    title,
+    description,
+  });
   return res.data;
 };
