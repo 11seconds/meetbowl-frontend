@@ -1,16 +1,16 @@
-import Margin from 'components/common/Margin';
-import Flex from 'components/common/Flex';
+// import Margin from 'components/common/Margin';
+// import Flex from 'components/common/Flex';
 import Typography from 'components/common/Typography';
 import BottomSheet from 'components/timetable/BottomSheet';
-import Toggle from 'components/common/Toggle';
+// import Toggle from 'components/common/Toggle';
 import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
 
-type BottomSheetContainerProps = {
-  timetableId: string;
-};
+// type BottomSheetContainerProps = {
+//   timetableId: string;
+// };
 
-const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
+const BottomSheetContainer = () => {
   return (
     <BottomSheet
       header={
@@ -18,13 +18,13 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
           <Typography size="base" weight="bold">
             9명 제출
           </Typography>
-          <Flex align="center">
+          {/* <Flex align="center">
             <Typography size="sm" weight="medium" color="red">
               모두 선택
             </Typography>
             <Margin direction="horizontal" size={8} />
             <Toggle />
-          </Flex>
+          </Flex> */}
         </>
       }
       body={

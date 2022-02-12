@@ -13,16 +13,20 @@ const Title = styled.div`
   flex-grow: 1;
 `;
 
-type Header = {
+type HeaderProps = {
   title: JSX.Element;
-  menu: JSX.Element;
+  menu?: JSX.Element;
 };
 
-const Header = ({ title, menu }: Header) => (
+const Header = ({ title, menu }: HeaderProps) => (
   <Wrapper>
     <Title>{title}</Title>
     <div>{menu}</div>
   </Wrapper>
 );
+
+Header.defaultProps = {
+  menu: undefined,
+};
 
 export default Header;

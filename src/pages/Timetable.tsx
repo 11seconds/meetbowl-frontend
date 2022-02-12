@@ -30,7 +30,7 @@ const TimetablePage = () => {
     <TimetableTemplate
       header={<HeaderContainer timetableId={timetableId as string} onError={handleHeaderError} />}
       timetable={<TimetableContainer timetableId={timetableId as string} />}
-      bottomSheet={<BottomSheetContainer timetableId={timetableId as string} />}
+      bottomSheet={<BottomSheetContainer />}
     />
   );
 };

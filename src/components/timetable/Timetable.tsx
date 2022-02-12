@@ -18,8 +18,6 @@ type TimetableProps = {
   onClick: (cell: CellType, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => void;
 };
 
-const days = ['일', '월', '화', '수', '목', '금', '토', '일'];
-
 const START_HOUR = 6;
 
 const getScheduleBlock = (
