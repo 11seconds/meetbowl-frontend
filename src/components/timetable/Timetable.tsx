@@ -68,11 +68,7 @@ const Timetable = ({ timetable, onClick }: TimetableProps) => {
 
               const scheduleBlock = getScheduleBlock(timetable, cell);
 
-              return (
-                <Cell onClick={() => onClick(cell, scheduleBlock)} color={scheduleBlock && 'gray'}>
-                  {days[day]}요일 {startTime}시
-                </Cell>
-              );
+              return <Cell onClick={() => onClick(cell, scheduleBlock)} color={scheduleBlock && 'gray'} />;
             })}
           </>
         );
