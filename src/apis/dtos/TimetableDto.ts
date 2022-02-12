@@ -1,17 +1,10 @@
-export type Response = {
-  title: 'string';
-  description: 'string';
-  createUserId: 'string';
-  id: 'string';
-};
-
-export type CreateRequest = {
+export type Timetable = {
+  id: string;
   title: string;
   description: string;
+  createUserId: string;
 };
 
-export type UpdateRequest = {
-  timetableId: string;
-  title: string;
-  description?: string;
-};
+export type CreateRequest = Pick<Timetable, 'title'> & Pick<Partial<Timetable>, 'description'>;
+
+export type UpdateRequest = Pick<Timetable, 'id' | 'title'> & Pick<Partial<Timetable>, 'description'>;

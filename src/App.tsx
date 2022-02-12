@@ -5,6 +5,8 @@ import themes from 'assets/themes';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import Router from './Router';
 
+import 'react-loading-skeleton/dist/skeleton.css';
+
 const App = () => {
   const queryClient = new QueryClient();
 

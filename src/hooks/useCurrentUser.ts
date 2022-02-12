@@ -4,7 +4,7 @@ import * as apis from 'apis';
 
 const useUserActive = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<UserDto.Response>();
+  const [user, setUser] = useState<UserDto.User>();
 
   useEffect(() => {
     apis.user.getCurrentUser().then((data) => {

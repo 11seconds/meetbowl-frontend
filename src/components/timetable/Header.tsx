@@ -8,16 +8,25 @@ const Wrapper = styled.div`
   padding: 0 20px;
 `;
 
-type Header = {
+const Title = styled.div`
+  margin-right: 10px;
+  flex-grow: 1;
+`;
+
+type HeaderProps = {
   title: JSX.Element;
-  menu: JSX.Element;
+  menu?: JSX.Element;
 };
 
-const Header = ({ title, menu }: Header) => (
+const Header = ({ title, menu }: HeaderProps) => (
   <Wrapper>
-    <div>{title}</div>
+    <Title>{title}</Title>
     <div>{menu}</div>
   </Wrapper>
 );
+
+Header.defaultProps = {
+  menu: undefined,
+};
 
 export default Header;

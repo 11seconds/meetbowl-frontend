@@ -18,6 +18,7 @@ const Cell = styled.div<CellProps>`
   color: ${(props) => props.theme.colors.specific.timetableCellNumber};
   font-size: 12px;
   font-weight: 500;
+  transition: all 0.3s;
 
   ${(props) =>
     props.header &&

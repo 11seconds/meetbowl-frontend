@@ -25,7 +25,7 @@ const CreateTimetable = () => {
   }, [navigate, isLoading, isActive, timetableId]);
 
   const mutation = useMutation(async () => {
-    const { id } = await timetable.createTimetable({ title, description: '' });
+    const { id } = await timetable.createTimetable({ title });
     navigate(`/timetable/${id}`);
   });
 

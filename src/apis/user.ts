@@ -1,22 +1,18 @@
-/* eslint-disable import/prefer-default-export */
+import { KakaoDto } from 'apis/dtos';
 import { AxiosError } from 'axios';
 import axios from 'utils/customAxios';
 import { UserDto } from './dtos';
 
-export const kakaoLogin = async ({
-  code,
-  redirectUri,
-}: UserDto.KakaoLoginRequest): Promise<UserDto.KakaoLoginResponse> => {
+export const kakaoLogin = async ({ code, redirectUri }: KakaoDto.Request): Promise<KakaoDto.Response> => {
   try {
-    const res = await axios.post<UserDto.KakaoLoginResponse>('/users/login', { code, redirectUri });
-    return res.data;
+    return (await axios.post('/users/login', { code, redirectUri })).data;
   } catch (error) {
     const serverError = error as AxiosError;
     throw new Error(serverError.response?.data.detail);
   }
 };
 
-export const getCurrentUser = async (): Promise<UserDto.Response> => {
+export const getCurrentUser = async (): Promise<UserDto.User> => {
   try {
     return (await axios.get('/users/me')).data;
   } catch (error) {

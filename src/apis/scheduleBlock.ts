@@ -1,41 +1,51 @@
 import axios from 'utils/customAxios';
 import { ScheduleBlockDto } from './dtos';
 
-export const getScheduleBlocksByTimetableId = async (timetableId: string): Promise<ScheduleBlockDto.Response[]> => {
-  const res = await axios.get<ScheduleBlockDto.Response[]>(`/timetables/${timetableId}/scheduleblocks`);
+export const getScheduleBlocksByTimetableId = async (
+  timetableId: string
+): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
+  const res = await axios.get(`/timetables/${timetableId}/scheduleblocks`);
   return res.data;
 };
 
 export const createScheduleBlock = async ({
   tableId,
-  startDatetime,
-  endDatetime,
+  startTime,
+  startMinute,
+  endTime,
+  endMinute,
+  day,
   label,
-  userId,
-}: ScheduleBlockDto.CreateRequest): Promise<ScheduleBlockDto.Response[]> => {
-  const res = await axios.post<ScheduleBlockDto.Response[]>('/scheduleblocks', {
+}: ScheduleBlockDto.CreateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
+  const res = await axios.post('/scheduleblocks', {
     tableId,
-    startDatetime,
-    endDatetime,
+    startTime,
+    startMinute,
+    endTime,
+    endMinute,
+    day,
     label,
-    userId,
   });
   return res.data;
 };
 
 export const updateScheduleBlock = async ({
   tableId,
-  startDatetime,
-  endDatetime,
+  startTime,
+  endTime,
+  day,
   label,
-  userId,
-}: ScheduleBlockDto.UpdateRequest): Promise<ScheduleBlockDto.Response[]> => {
-  const res = await axios.put<ScheduleBlockDto.Response[]>('/scheduleblocks', {
+}: ScheduleBlockDto.UpdateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
+  const res = await axios.put('/scheduleblocks', {
     tableId,
-    startDatetime,
-    endDatetime,
+    startTime,
+    endTime,
+    day,
     label,
-    userId,
   });
   return res.data;
+};
+
+export const deleteScheduleBlock = async ({ id }: ScheduleBlockDto.DeleteRequest) => {
+  await axios.delete(`/scheduleblocks/${id}`);
 };
