@@ -13,7 +13,10 @@ type TimetableContainerProps = {
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const { data: timetable, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
-    () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string)
+    () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
+    {
+      refetchInterval: 3000,
+    }
   );
 
   const createMutation = useMutation(
