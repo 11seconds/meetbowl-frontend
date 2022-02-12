@@ -1,21 +1,19 @@
-export type Response = {
+export type ScheduleBlock = {
+  tableId: string;
   userId: string;
-  startDatetime: Date;
-  endDatetime: Date;
+  startTime: number;
+  startMinute: number;
+  endTime: number;
+  endMinute: number;
+  day: number;
+  label: Date;
 };
 
-export type CreateRequest = {
-  tableId: string;
-  startDatetime: Date;
-  endDatetime: Date;
-  label: string;
-  userId: string;
-};
+export type CreateRequest = Pick<
+  ScheduleBlock,
+  'tableId' | 'startTime' | 'startMinute' | 'endTime' | 'endMinute' | 'day'
+> &
+  Pick<Partial<ScheduleBlock>, 'label'>;
 
-export type UpdateRequest = {
-  tableId: string;
-  startDatetime?: Date;
-  endDatetime?: Date;
-  label?: string;
-  userId: string;
-};
+export type UpdateRequest = Pick<ScheduleBlock, 'tableId'> &
+  Pick<Partial<ScheduleBlock>, 'startTime' | 'startMinute' | 'endTime' | 'endMinute' | 'day' | 'label'>;

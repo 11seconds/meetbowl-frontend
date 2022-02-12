@@ -8,6 +8,11 @@ const Wrapper = styled.div`
   padding: 0 20px;
 `;
 
+const Title = styled.div`
+  margin-right: 10px;
+  flex-grow: 1;
+`;
+
 type Header = {
   title: JSX.Element;
   menu: JSX.Element;
@@ -15,7 +20,7 @@ type Header = {
 
 const Header = ({ title, menu }: Header) => (
   <Wrapper>
-    <div>{title}</div>
+    <Title>{title}</Title>
     <div>{menu}</div>
   </Wrapper>
 );
