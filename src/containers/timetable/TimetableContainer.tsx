@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 
 import { ScheduleBlockDto } from 'apis/dtos';
-import { scheduleBlock } from 'apis';
+import * as apis from 'apis';
 
 import Timetable from 'components/timetable/Timetable';
 import { useCallback } from 'react';
@@ -13,10 +13,10 @@ type TimetableContainerProps = {
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const { data: timetable, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
-    () => scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string)
+    () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string)
   );
 
-  const mutation = useMutation(
+  const createMutation = useMutation(
     async ({
       startTime,
       endTime,
@@ -28,7 +28,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
       endMinute: number;
       day: number;
     }): Promise<void> => {
-      await scheduleBlock.createScheduleBlock({
+      await apis.scheduleBlock.createScheduleBlock({
         tableId: timetableId,
         startTime,
         startMinute: 0,
@@ -44,11 +44,28 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
     }
   );
 
-  const handleClick = useCallback(
-    (cell) => {
-      mutation.mutate(cell);
+  const deleteMutation = useMutation(
+    async ({ id }: ScheduleBlockDto.DeleteRequest): Promise<void> => {
+      await apis.scheduleBlock.deleteScheduleBlock({
+        id,
+      });
     },
-    [mutation]
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const handleClick = useCallback(
+    (cell, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => {
+      if (scheduleBlock) {
+        deleteMutation.mutate({ id: scheduleBlock.id });
+      } else {
+        createMutation.mutate(cell);
+      }
+    },
+    [createMutation, deleteMutation]
   );
 
   return <Timetable timetable={timetable || []} onClick={handleClick} />;

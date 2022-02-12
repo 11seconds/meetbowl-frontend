@@ -45,3 +45,7 @@ export const updateScheduleBlock = async ({
   });
   return res.data;
 };
+
+export const deleteScheduleBlock = async ({ id }: ScheduleBlockDto.DeleteRequest) => {
+  await axios.delete(`/scheduleblocks/${id}`);
+};

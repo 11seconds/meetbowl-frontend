@@ -1,3 +1,4 @@
+import { ScheduleBlockDto } from 'apis/dtos';
 import CellGrid from './CellGrid';
 import Cell from './Cell';
 
@@ -13,16 +14,19 @@ type CellType = {
 };
 
 type TimetableProps = {
-  timetable: CellType[];
-  onClick: (cell: CellType) => void;
+  timetable: ScheduleBlockDto.ScheduleBlock[];
+  onClick: (cell: CellType, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => void;
 };
 
 const days = ['일', '월', '화', '수', '목', '금', '토', '일'];
 
 const START_HOUR = 6;
 
-const getScheduleBlock = (timetable: CellType[], cell: CellType) => {
-  return timetable.find((scheduleBlock: CellType) => {
+const getScheduleBlock = (
+  timetable: ScheduleBlockDto.ScheduleBlock[],
+  cell: CellType
+): ScheduleBlockDto.ScheduleBlock | undefined => {
+  return timetable.find((scheduleBlock) => {
     if (scheduleBlock.day === cell.day && scheduleBlock.startTime === cell.startTime) {
       return scheduleBlock;
     }
@@ -30,6 +34,8 @@ const getScheduleBlock = (timetable: CellType[], cell: CellType) => {
   });
 };
 
+// cell: UI 에서의 칸
+// scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
 const Timetable = ({ timetable, onClick }: TimetableProps) => {
   return (
     <CellGrid>
@@ -63,7 +69,7 @@ const Timetable = ({ timetable, onClick }: TimetableProps) => {
               const scheduleBlock = getScheduleBlock(timetable, cell);
 
               return (
-                <Cell onClick={() => onClick(cell)} color={scheduleBlock && 'gray'}>
+                <Cell onClick={() => onClick(cell, scheduleBlock)} color={scheduleBlock && 'gray'}>
                   {days[day]}요일 {startTime}시
                 </Cell>
               );

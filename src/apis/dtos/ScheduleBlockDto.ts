@@ -1,4 +1,5 @@
 export type ScheduleBlock = {
+  id: string;
   tableId: string;
   userId: string;
   startTime: number;
@@ -17,3 +18,5 @@ export type CreateRequest = Pick<
 
 export type UpdateRequest = Pick<ScheduleBlock, 'tableId'> &
   Pick<Partial<ScheduleBlock>, 'startTime' | 'startMinute' | 'endTime' | 'endMinute' | 'day' | 'label'>;
+
+export type DeleteRequest = Pick<ScheduleBlock, 'id'>;
