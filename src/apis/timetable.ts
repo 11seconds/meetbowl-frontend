@@ -1,16 +1,16 @@
 import axios from 'utils/customAxios';
 import { TimetableDto } from './dtos';
 
-export const getTimetable = async (timetableId: string): Promise<TimetableDto.Response> => {
-  const res = await axios.get<TimetableDto.Response>(`/timetables/${timetableId}`);
+export const getTimetable = async (timetableId: string): Promise<TimetableDto.Timetable> => {
+  const res = await axios.get(`/timetables/${timetableId}`);
   return res.data;
 };
 
 export const createTimetable = async ({
   title,
   description,
-}: TimetableDto.CreateRequest): Promise<TimetableDto.Response> => {
-  const res = await axios.post<TimetableDto.Response>('/timetables', {
+}: TimetableDto.CreateRequest): Promise<TimetableDto.Timetable> => {
+  const res = await axios.post('/timetables', {
     title,
     description,
   });
@@ -18,12 +18,12 @@ export const createTimetable = async ({
 };
 
 export const updateTimetable = async ({
-  timetableId,
+  id,
   title,
   description,
-}: TimetableDto.UpdateRequest): Promise<TimetableDto.Response> => {
-  const res = await axios.patch<TimetableDto.Response>(`/timetables/${timetableId}`, {
-    timetableId,
+}: TimetableDto.UpdateRequest): Promise<TimetableDto.Timetable> => {
+  const res = await axios.patch(`/timetables/${id}`, {
+    id,
     title,
     description,
   });

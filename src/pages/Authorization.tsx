@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { user } from 'apis';
-import { UserDto } from 'apis/dtos';
+import { KakaoDto } from 'apis/dtos';
 import { useQuery } from 'react-query';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { storeToken } from 'utils/token';
@@ -14,7 +14,7 @@ const Authorization = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  const { isLoading, isError, data, error } = useQuery<UserDto.KakaoLoginResponse, Error>(
+  const { isLoading, isError, data, error } = useQuery<KakaoDto.Response, Error>(
     'kakaoLogin',
     () => user.kakaoLogin({ code, redirectUri: `${process.env.REACT_APP_KAKAO_REDIRECT_HOST}/authorization` }),
     {

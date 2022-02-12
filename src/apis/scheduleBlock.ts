@@ -4,7 +4,7 @@ import { ScheduleBlockDto } from './dtos';
 export const getScheduleBlocksByTimetableId = async (
   timetableId: string
 ): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
-  const res = await axios.get<ScheduleBlockDto.ScheduleBlock[]>(`/timetables/${timetableId}/scheduleblocks`);
+  const res = await axios.get(`/timetables/${timetableId}/scheduleblocks`);
   return res.data;
 };
 
@@ -17,7 +17,7 @@ export const createScheduleBlock = async ({
   day,
   label,
 }: ScheduleBlockDto.CreateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
-  const res = await axios.post<ScheduleBlockDto.ScheduleBlock[]>('/scheduleblocks', {
+  const res = await axios.post('/scheduleblocks', {
     tableId,
     startTime,
     startMinute,
@@ -36,7 +36,7 @@ export const updateScheduleBlock = async ({
   day,
   label,
 }: ScheduleBlockDto.UpdateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
-  const res = await axios.put<ScheduleBlockDto.ScheduleBlock[]>('/scheduleblocks', {
+  const res = await axios.put('/scheduleblocks', {
     tableId,
     startTime,
     endTime,

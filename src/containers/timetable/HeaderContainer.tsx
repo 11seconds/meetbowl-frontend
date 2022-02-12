@@ -21,10 +21,10 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
     data,
     error,
     refetch: refetchTimetable,
-  } = useQuery<TimetableDto.Response, Error>(['getTimetable', timetableId], () => timetable.getTimetable(timetableId));
+  } = useQuery<TimetableDto.Timetable, Error>(['getTimetable', timetableId], () => timetable.getTimetable(timetableId));
 
   const mutation = useMutation(async (title: string) => {
-    await timetable.updateTimetable({ timetableId: timetableId as string, title });
+    await timetable.updateTimetable({ id: timetableId as string, title });
     refetchTimetable();
   });
 
