@@ -88,7 +88,7 @@ const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick
           <>
             <Cell header> {startTime} </Cell>
 
-            {Array.from([1, 2, 3, 4, 5, 6, 0]).map((__, day) => {
+            {Array.from([1, 2, 3, 4, 5, 6, 0]).map((day) => {
               const currentCell: CellType = {
                 day,
                 startTime,
