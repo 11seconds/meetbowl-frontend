@@ -66,13 +66,17 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
 
   const handleClick = useCallback(
     (cell, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => {
-      if (scheduleBlock) {
-        if (scheduleBlock.userId === userId) {
-          deleteMutation.mutate({ id: scheduleBlock.id });
-        }
-      } else {
+      if (!scheduleBlock) {
         createMutation.mutate(cell);
+        return;
       }
+
+      if (scheduleBlock && scheduleBlock.userId === userId) {
+        deleteMutation.mutate({ id: scheduleBlock.id });
+        return;
+      }
+
+      createMutation.mutate(cell);
     },
     [createMutation, deleteMutation, userId]
   );
