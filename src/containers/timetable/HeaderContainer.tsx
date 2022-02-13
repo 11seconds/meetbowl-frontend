@@ -3,6 +3,7 @@ import { useQuery, useMutation } from 'react-query';
 import { TimetableDto } from 'apis/dtos';
 import { timetable } from 'apis';
 
+import useCurrentUser from 'hooks/useCurrentUser';
 import Skeleton from 'react-loading-skeleton';
 
 import Header from 'components/timetable/Header';
@@ -15,6 +16,8 @@ type HeaderContainerProps = {
 };
 
 const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
+  const { id: userId } = useCurrentUser();
+
   const {
     isLoading,
     isError,
@@ -39,7 +42,11 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
     <Header
       title={
         data ? (
-          <Title title={data.title} onChange={(title) => mutation.mutate(title)} />
+          <Title
+            title={data.title}
+            isEditable={userId === data.createUserId}
+            onChange={(title) => mutation.mutate(title)}
+          />
         ) : (
           <Skeleton width="100%" height="33px" />
         )
