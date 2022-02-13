@@ -75,9 +75,7 @@ const Timetable = ({ timetable, selectedSumitterIds, userId, onClick }: Timetabl
           <>
             <Cell header> {startTime} </Cell>
 
-            {Array.from(new Array(7)).map((__, j) => {
-              const day = j;
-
+            {Array.from([1, 2, 3, 4, 5, 6, 0]).map((__, day) => {
               const cell: CellType = {
                 day,
                 startTime,
@@ -90,7 +88,7 @@ const Timetable = ({ timetable, selectedSumitterIds, userId, onClick }: Timetabl
 
               const highlighted = getHighlighted(scheduleBlock, selectedSumitterIds);
               const isMine = scheduleBlock?.userId === userId;
-              const showColor = highlighted || isMine;
+              const showColor = selectedSumitterIds.length > 0 ? highlighted : isMine;
 
               const cellColor = getCellColor(scheduleBlock, showColor);
 
