@@ -3,6 +3,8 @@ import { useQuery } from 'react-query';
 import * as apis from 'apis';
 import { ScheduleBlockDto } from 'apis/dtos';
 
+import * as timetableState from 'states/timetableState';
+
 // import Margin from 'components/common/Margin';
 // import Flex from 'components/common/Flex';
 import Typography from 'components/common/Typography';
@@ -10,13 +12,16 @@ import BottomSheet from 'components/timetable/BottomSheet';
 // import Toggle from 'components/common/Toggle';
 import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
 
 type BottomSheetContainerProps = {
   timetableId: string;
 };
 
 const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
+  const [selectedSumitterIds, setSelectedSumitterIds] = useRecoilState<string[]>(timetableState.selectedSumitterIds);
+
   const { data: scheduleBlocks } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
     () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
@@ -25,6 +30,7 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
     }
   );
 
+  // TODO: 정렬
   const submitters = useMemo(() => {
     if (!scheduleBlocks) return [];
 
@@ -38,6 +44,18 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
       []
     );
   }, [scheduleBlocks]);
+
+  const handleSubmitterNameClick = useCallback(
+    (userId) => {
+      if (!selectedSumitterIds.includes(userId)) {
+        setSelectedSumitterIds([...selectedSumitterIds, userId]);
+        return;
+      }
+
+      setSelectedSumitterIds(selectedSumitterIds.filter((id) => id !== userId));
+    },
+    [selectedSumitterIds, setSelectedSumitterIds]
+  );
 
   return (
     <BottomSheet
@@ -58,7 +76,13 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
       body={
         <NameGrid>
           {submitters.map((submitter) => (
-            <SubmitterName key={submitter.userId} color={submitter.color} name={submitter.nickname} />
+            <SubmitterName
+              key={submitter.userId}
+              color={submitter.color}
+              name={submitter.nickname}
+              highlighted={selectedSumitterIds.includes(submitter.userId)}
+              onClick={() => handleSubmitterNameClick(submitter.userId)}
+            />
           ))}
         </NameGrid>
       }

@@ -4,6 +4,7 @@ type SubmitterNameProps = {
   color: string;
   name: string;
   highlighted?: boolean;
+  onClick?: () => void;
 };
 
 const Wrapper = styled.div`
@@ -40,8 +41,8 @@ const Name = styled.div<Pick<SubmitterNameProps, 'highlighted' | 'color'>>`
     `}
 `;
 
-const SubmitterName = ({ color, name, highlighted }: SubmitterNameProps) => (
-  <Wrapper>
+const SubmitterName = ({ color, name, highlighted, onClick }: SubmitterNameProps) => (
+  <Wrapper onClick={onClick}>
     <Color color={color} />
     <Name highlighted={highlighted} color={color}>
       {name}
@@ -51,6 +52,7 @@ const SubmitterName = ({ color, name, highlighted }: SubmitterNameProps) => (
 
 SubmitterName.defaultProps = {
   highlighted: false,
+  onClick: undefined,
 };
 
 export default SubmitterName;
