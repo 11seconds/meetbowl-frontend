@@ -5,10 +5,11 @@ import TextField from 'components/common/TextField';
 
 type TitleProps = {
   title: string;
+  isEditable: boolean;
   onChange: (newTitle: string) => void;
 };
 
-const Title = ({ title, onChange }: TitleProps) => {
+const Title = ({ title, isEditable, onChange }: TitleProps) => {
   const textFieldRef = useRef<HTMLInputElement>(null);
   const [modifying, setModifying] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
@@ -33,7 +34,7 @@ const Title = ({ title, onChange }: TitleProps) => {
     }
   }, [modifying, changed, newTitle, setChanged, onChange]);
 
-  if (modifying) {
+  if (isEditable && modifying) {
     return (
       <TextField
         ref={textFieldRef}

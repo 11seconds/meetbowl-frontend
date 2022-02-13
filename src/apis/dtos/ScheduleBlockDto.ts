@@ -2,12 +2,14 @@ export type ScheduleBlock = {
   id: string;
   tableId: string;
   userId: string;
+  nickname: string;
   startTime: number;
   startMinute: number;
   endTime: number;
   endMinute: number;
   day: number;
-  label: Date;
+  label: string;
+  color: string;
 };
 
 export type CreateRequest = Pick<
