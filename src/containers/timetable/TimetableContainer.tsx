@@ -1,16 +1,20 @@
+import { useCallback } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 
+import useCurrentUser from 'hooks/useCurrentUser';
 import { ScheduleBlockDto } from 'apis/dtos';
 import * as apis from 'apis';
 
 import Timetable from 'components/timetable/Timetable';
-import { useCallback } from 'react';
+import ScreenSpinner from 'components/common/ScreenSpinner';
 
 type TimetableContainerProps = {
   timetableId: string;
 };
 
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
+  const { isLoading, id: userId } = useCurrentUser();
   const { data: timetable, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
     () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
@@ -63,15 +67,20 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const handleClick = useCallback(
     (cell, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => {
       if (scheduleBlock) {
-        deleteMutation.mutate({ id: scheduleBlock.id });
+        if (scheduleBlock.userId === userId) {
+          deleteMutation.mutate({ id: scheduleBlock.id });
+        }
       } else {
         createMutation.mutate(cell);
       }
     },
-    [createMutation, deleteMutation]
+    [createMutation, deleteMutation, userId]
   );
 
-  return <Timetable timetable={timetable || []} onClick={handleClick} />;
+  if (isLoading) return <ScreenSpinner />;
+  if (!userId) return <Navigate to="/" />;
+
+  return <Timetable timetable={timetable || []} userId={userId} onClick={handleClick} />;
 };
 
 export default TimetableContainer;
