@@ -1,20 +1,36 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CreateTimetable from './pages/CreateTimetable';
-import JoinTimetable from './pages/JoinTimetable';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Timetable from './pages/Timetable';
+import { useEffect } from 'react';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyles from 'components/common/GlobalStyles';
+import themes from 'assets/themes';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { RecoilRoot } from 'recoil';
+import Router from './Router';
 
-const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<CreateTimetable />} />
-      <Route path="/join/:timetableId" element={<JoinTimetable />} />
-      <Route path="/timetable/:timetableId" element={<Timetable />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/sign-up" element={<SignUp />} />
-    </Routes>
-  </BrowserRouter>
-);
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const App = () => {
+  const queryClient = new QueryClient();
+
+  // kakao API initialize
+  useEffect(() => {
+    const { Kakao } = window;
+    const kakaoKey = process.env.REACT_APP_KAKAO_KEY;
+
+    if (!Kakao.isInitialized()) {
+      Kakao.init(kakaoKey);
+    }
+  }, []);
+
+  return (
+    <ThemeProvider theme={themes.light}>
+      <GlobalStyles />
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+          <Router />
+        </RecoilRoot>
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
+};
 
 export default App;
