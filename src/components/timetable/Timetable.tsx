@@ -3,6 +3,8 @@ import CellGrid from './CellGrid';
 import Cell from './Cell';
 
 // TODO: Storybook 작성
+// TODO: Refactoring
+// TODO: 일요일, 월요일 순서 재배치
 
 type CellType = {
   day: number;
@@ -15,12 +17,13 @@ type CellType = {
 
 type TimetableProps = {
   timetable: ScheduleBlockDto.ScheduleBlock[];
+  userId: string;
   onClick: (cell: CellType, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => void;
 };
 
 const START_HOUR = 6;
 
-const getScheduleBlock = (
+const findScheduleBlock = (
   timetable: ScheduleBlockDto.ScheduleBlock[],
   cell: CellType
 ): ScheduleBlockDto.ScheduleBlock | undefined => {
@@ -32,9 +35,18 @@ const getScheduleBlock = (
   });
 };
 
+function getCellColor(scheduleBlock: ScheduleBlockDto.ScheduleBlock | undefined, isMine: boolean) {
+  let cellColor = 'default';
+  if (scheduleBlock) {
+    if (isMine) cellColor = scheduleBlock.color;
+    else cellColor = 'gray';
+  }
+  return cellColor;
+}
+
 // cell: UI 에서의 칸
 // scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
-const Timetable = ({ timetable, onClick }: TimetableProps) => {
+const Timetable = ({ timetable, userId, onClick }: TimetableProps) => {
   return (
     <CellGrid>
       <Cell />
@@ -64,9 +76,10 @@ const Timetable = ({ timetable, onClick }: TimetableProps) => {
                 endMinute: 59,
               };
 
-              const scheduleBlock = getScheduleBlock(timetable, cell);
+              const scheduleBlock = findScheduleBlock(timetable, cell);
+              const cellColor = getCellColor(scheduleBlock, scheduleBlock?.userId === userId);
 
-              return <Cell onClick={() => onClick(cell, scheduleBlock)} color={scheduleBlock && 'gray'} />;
+              return <Cell onClick={() => onClick(cell, scheduleBlock)} color={cellColor} />;
             })}
           </>
         );
