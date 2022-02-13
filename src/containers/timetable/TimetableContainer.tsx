@@ -19,7 +19,7 @@ type TimetableContainerProps = {
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const { isLoading, id: userId } = useCurrentUser();
 
-  const [selectedSumitterIds] = useRecoilState<string[]>(timetableState.selectedSumitterIds);
+  const [selectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
 
   const { data: timetable, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
@@ -32,7 +32,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const createMutation = useMutation(
     async ({
       startTime,
-      endTime,
+      // endTime,
       day,
     }: {
       startTime: number;
@@ -45,8 +45,8 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
         tableId: timetableId,
         startTime,
         startMinute: 0,
-        endTime,
-        endMinute: 0,
+        endTime: startTime,
+        endMinute: 58,
         day,
       });
     },
@@ -93,9 +93,9 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   // TODO: timetable 네이밍을 scheduleBlocks 로 변경
   return (
     <Timetable
-      timetable={timetable || []}
-      selectedSumitterIds={selectedSumitterIds}
-      userId={userId}
+      scheduleBlocks={timetable || []}
+      selectedSubmitterId={selectedSubmitterId}
+      currentUserId={userId}
       onClick={handleClick}
     />
   );

@@ -20,7 +20,7 @@ type BottomSheetContainerProps = {
 };
 
 const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
-  const [selectedSumitterIds, setSelectedSumitterIds] = useRecoilState<string[]>(timetableState.selectedSumitterIds);
+  const [selectedSubmitterId, setSelectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
 
   const { data: scheduleBlocks } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
@@ -47,14 +47,14 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
 
   const handleSubmitterNameClick = useCallback(
     (userId) => {
-      if (!selectedSumitterIds.includes(userId)) {
-        setSelectedSumitterIds([...selectedSumitterIds, userId]);
+      if (selectedSubmitterId === userId) {
+        setSelectedSubmitterId(null);
         return;
       }
 
-      setSelectedSumitterIds(selectedSumitterIds.filter((id) => id !== userId));
+      setSelectedSubmitterId(userId);
     },
-    [selectedSumitterIds, setSelectedSumitterIds]
+    [selectedSubmitterId, setSelectedSubmitterId]
   );
 
   return (
@@ -80,7 +80,7 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
               key={submitter.userId}
               color={submitter.color}
               name={submitter.nickname}
-              highlighted={selectedSumitterIds.includes(submitter.userId)}
+              highlighted={selectedSubmitterId === submitter.userId}
               onClick={() => handleSubmitterNameClick(submitter.userId)}
             />
           ))}

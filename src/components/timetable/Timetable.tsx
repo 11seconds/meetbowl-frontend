@@ -16,47 +16,60 @@ type CellType = {
 };
 
 type TimetableProps = {
-  timetable: ScheduleBlockDto.ScheduleBlock[];
-  userId: string;
-  selectedSumitterIds: string[];
+  scheduleBlocks: ScheduleBlockDto.ScheduleBlock[];
+  currentUserId: string;
+  selectedSubmitterId: string | null;
   onClick: (cell: CellType, scheduleBlock?: ScheduleBlockDto.ScheduleBlock) => void;
 };
 
 const START_HOUR = 6;
 
-const findScheduleBlock = (
-  timetable: ScheduleBlockDto.ScheduleBlock[],
-  cell: CellType
-): ScheduleBlockDto.ScheduleBlock | undefined => {
-  return timetable.find((scheduleBlock) => {
-    if (scheduleBlock.day === cell.day && scheduleBlock.startTime === cell.startTime) {
-      return scheduleBlock;
-    }
-    return null;
-  });
+const isSameTime = (scheduleBlock: ScheduleBlockDto.ScheduleBlock, cell: CellType) => {
+  // TODO: 추후 분까지 추가되어야 함
+  return (
+    scheduleBlock.day === cell.day &&
+    scheduleBlock.startTime === cell.startTime &&
+    scheduleBlock.endTime === cell.endTime
+  );
 };
 
-function getHighlighted(scheduleBlock: ScheduleBlockDto.ScheduleBlock | undefined, selectedSumitterIds: string[]) {
-  let highlighted = false;
-  if (scheduleBlock) {
-    highlighted = selectedSumitterIds.includes(scheduleBlock?.userId);
-  }
-  return highlighted;
-}
+const findScheduleBlocksByCell = (scheduleBlocks: ScheduleBlockDto.ScheduleBlock[], cell: CellType) => {
+  return scheduleBlocks.find((block) => isSameTime(block, cell));
+};
 
-function getCellColor(scheduleBlock: ScheduleBlockDto.ScheduleBlock | undefined, showColor: boolean) {
-  let cellColor = 'default';
-  if (scheduleBlock) {
-    if (showColor) cellColor = scheduleBlock.color;
-    else cellColor = 'gray';
+const findScheduleBlockByCellAndUserId = (
+  scheduleBlocks: ScheduleBlockDto.ScheduleBlock[],
+  cell: CellType,
+  userId: string | null
+) => {
+  return scheduleBlocks.find((block) => isSameTime(block, cell) && block.userId === userId);
+};
+
+const getCellColor = (
+  scheduleBlocks: ScheduleBlockDto.ScheduleBlock[],
+  cell: CellType,
+  currentUserId: string,
+  selectedSubmitterId: string | null
+) => {
+  const scheduleBlockOfSelectedSubmitter = findScheduleBlockByCellAndUserId(scheduleBlocks, cell, selectedSubmitterId);
+  if (scheduleBlockOfSelectedSubmitter?.userId === selectedSubmitterId) {
+    return scheduleBlockOfSelectedSubmitter.color;
   }
-  return cellColor;
-}
+
+  const scheduleBlockOfCurrentUser = findScheduleBlockByCellAndUserId(scheduleBlocks, cell, currentUserId);
+  if (scheduleBlockOfCurrentUser && !selectedSubmitterId) {
+    return scheduleBlockOfCurrentUser.color;
+  }
+
+  const scheduleBlock = findScheduleBlocksByCell(scheduleBlocks, cell);
+  if (scheduleBlock) return 'gray';
+
+  return 'default';
+};
 
 // cell: UI 에서의 칸
 // scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
-// TODO: userId 를 currentUserID 로 네이밍 변경
-const Timetable = ({ timetable, selectedSumitterIds, userId, onClick }: TimetableProps) => {
+const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick }: TimetableProps) => {
   return (
     <CellGrid>
       <Cell />
@@ -76,7 +89,7 @@ const Timetable = ({ timetable, selectedSumitterIds, userId, onClick }: Timetabl
             <Cell header> {startTime} </Cell>
 
             {Array.from([1, 2, 3, 4, 5, 6, 0]).map((__, day) => {
-              const cell: CellType = {
+              const currentCell: CellType = {
                 day,
                 startTime,
                 startMinute: 0,
@@ -84,15 +97,16 @@ const Timetable = ({ timetable, selectedSumitterIds, userId, onClick }: Timetabl
                 endMinute: 59,
               };
 
-              const scheduleBlock = findScheduleBlock(timetable, cell);
+              const cellColor = getCellColor(scheduleBlocks, currentCell, currentUserId, selectedSubmitterId);
 
-              const highlighted = getHighlighted(scheduleBlock, selectedSumitterIds);
-              const isMine = scheduleBlock?.userId === userId;
-              const showColor = selectedSumitterIds.length > 0 ? highlighted : isMine;
-
-              const cellColor = getCellColor(scheduleBlock, showColor);
-
-              return <Cell onClick={() => onClick(cell, scheduleBlock)} color={cellColor} />;
+              return (
+                <Cell
+                  onClick={() =>
+                    onClick(currentCell, findScheduleBlockByCellAndUserId(scheduleBlocks, currentCell, currentUserId))
+                  }
+                  color={cellColor}
+                />
+              );
             })}
           </>
         );
