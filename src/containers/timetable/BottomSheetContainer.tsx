@@ -1,3 +1,10 @@
+import { useQuery } from 'react-query';
+
+import * as apis from 'apis';
+import { ScheduleBlockDto } from 'apis/dtos';
+
+import * as timetableState from 'states/timetableState';
+
 // import Margin from 'components/common/Margin';
 // import Flex from 'components/common/Flex';
 import Typography from 'components/common/Typography';
@@ -5,18 +12,57 @@ import BottomSheet from 'components/timetable/BottomSheet';
 // import Toggle from 'components/common/Toggle';
 import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
+import { useCallback, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
 
-// type BottomSheetContainerProps = {
-//   timetableId: string;
-// };
+type BottomSheetContainerProps = {
+  timetableId: string;
+};
 
-const BottomSheetContainer = () => {
+const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
+  const [selectedSubmitterId, setSelectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
+
+  const { data: scheduleBlocks } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
+    'getSchedulblocks',
+    () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
+    {
+      refetchInterval: 3000,
+    }
+  );
+
+  // TODO: 정렬
+  const submitters = useMemo(() => {
+    if (!scheduleBlocks) return [];
+
+    return scheduleBlocks.reduce<Pick<ScheduleBlockDto.ScheduleBlock, 'userId' | 'color' | 'nickname'>[]>(
+      (acc, cur) => {
+        if (!acc.map((scheduleBlock) => scheduleBlock.userId).includes(cur.userId)) {
+          return [...acc, { userId: cur.userId, nickname: cur.nickname, color: cur.color }];
+        }
+        return acc;
+      },
+      []
+    );
+  }, [scheduleBlocks]);
+
+  const handleSubmitterNameClick = useCallback(
+    (userId) => {
+      if (selectedSubmitterId === userId) {
+        setSelectedSubmitterId(null);
+        return;
+      }
+
+      setSelectedSubmitterId(userId);
+    },
+    [selectedSubmitterId, setSelectedSubmitterId]
+  );
+
   return (
     <BottomSheet
       header={
         <>
           <Typography size="base" weight="bold">
-            9명 제출
+            {submitters.length} 명 제출
           </Typography>
           {/* <Flex align="center">
             <Typography size="sm" weight="medium" color="red">
@@ -29,15 +75,15 @@ const BottomSheetContainer = () => {
       }
       body={
         <NameGrid>
-          <SubmitterName color="#f03e3e" name="USER NAME" />
-          <SubmitterName color="#0ca678" name="USER NAME" />
-          <SubmitterName color="#d6336c" name="USER NAME" />
-          <SubmitterName color="#1c7ed6" name="USER NAME" />
-          <SubmitterName color="#f59f00" name="USER NAME" />
-          <SubmitterName color="#ae3ec9" name="USER NAME" />
-          <SubmitterName color="#4263eb" name="USER NAME" />
-          <SubmitterName color="#94d82d" name="USER NAME" />
-          <SubmitterName color="#7048e8" name="USER NAME" />
+          {submitters.map((submitter) => (
+            <SubmitterName
+              key={submitter.userId}
+              color={submitter.color}
+              name={submitter.nickname}
+              highlighted={selectedSubmitterId === submitter.userId}
+              onClick={() => handleSubmitterNameClick(submitter.userId)}
+            />
+          ))}
         </NameGrid>
       }
     />

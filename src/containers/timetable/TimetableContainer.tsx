@@ -6,8 +6,11 @@ import useCurrentUser from 'hooks/useCurrentUser';
 import { ScheduleBlockDto } from 'apis/dtos';
 import * as apis from 'apis';
 
+import * as timetableState from 'states/timetableState';
+
 import Timetable from 'components/timetable/Timetable';
 import ScreenSpinner from 'components/common/ScreenSpinner';
+import { useRecoilState } from 'recoil';
 
 type TimetableContainerProps = {
   timetableId: string;
@@ -15,6 +18,9 @@ type TimetableContainerProps = {
 
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const { isLoading, id: userId } = useCurrentUser();
+
+  const [selectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
+
   const { data: timetable, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
     () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
@@ -26,7 +32,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   const createMutation = useMutation(
     async ({
       startTime,
-      endTime,
+      // endTime,
       day,
     }: {
       startTime: number;
@@ -39,8 +45,8 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
         tableId: timetableId,
         startTime,
         startMinute: 0,
-        endTime,
-        endMinute: 0,
+        endTime: startTime,
+        endMinute: 58,
         day,
       });
     },
@@ -84,7 +90,15 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   if (isLoading) return <ScreenSpinner />;
   if (!userId) return <Navigate to="/" />;
 
-  return <Timetable timetable={timetable || []} userId={userId} onClick={handleClick} />;
+  // TODO: timetable 네이밍을 scheduleBlocks 로 변경
+  return (
+    <Timetable
+      scheduleBlocks={timetable || []}
+      selectedSubmitterId={selectedSubmitterId}
+      currentUserId={userId}
+      onClick={handleClick}
+    />
+  );
 };
 
 export default TimetableContainer;

@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'components/common/GlobalStyles';
 import themes from 'assets/themes';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { RecoilRoot } from 'recoil';
 import Router from './Router';
 
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -24,7 +25,9 @@ const App = () => {
     <ThemeProvider theme={themes.light}>
       <GlobalStyles />
       <QueryClientProvider client={queryClient}>
-        <Router />
+        <RecoilRoot>
+          <Router />
+        </RecoilRoot>
       </QueryClientProvider>
     </ThemeProvider>
   );

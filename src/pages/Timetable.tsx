@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import useCurrentUser from 'hooks/useCurrentUser';
 
@@ -25,12 +25,13 @@ const TimetablePage = () => {
   }, [navigate]);
 
   if (isCurrentUserLoading) return <ScreenSpinner />;
+  if (!timetableId) return <Navigate to="/" />;
 
   return (
     <TimetableTemplate
       header={<HeaderContainer timetableId={timetableId as string} onError={handleHeaderError} />}
-      timetable={<TimetableContainer timetableId={timetableId as string} />}
-      bottomSheet={<BottomSheetContainer />}
+      timetable={<TimetableContainer timetableId={timetableId} />}
+      bottomSheet={<BottomSheetContainer timetableId={timetableId} />}
     />
   );
 };
