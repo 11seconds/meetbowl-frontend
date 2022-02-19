@@ -26,6 +26,8 @@ export const WithNames = () => (
         <SubmitterName color="#F23737" name="USER NAME 7" />
         <SubmitterName color="#232323" name="USER NAME 8" />
         <SubmitterName color="#1ABC2A" name="USER NAME 9" />
+        <SubmitterName color="#232323" name="USER NAME 8" />
+        <SubmitterName color="#1ABC2A" name="USER NAME 9" />
       </NameGrid>
     }
   />
