@@ -18,6 +18,7 @@ const CircleButtonWrapper = styled.button<CircleButtonWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
   border: none;
