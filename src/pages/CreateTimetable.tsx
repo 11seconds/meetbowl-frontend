@@ -10,6 +10,8 @@ import FullScreenButtonTemplate from 'components/templates/FullScreenButtonTempl
 import Button from 'components/common/Button';
 import TextField from 'components/common/TextField';
 import ScreenSpinner from 'components/common/ScreenSpinner';
+import Typography from 'components/common/Typography';
+import Margin from 'components/common/Margin';
 
 const CreateTimetable = () => {
   const navigate = useNavigate();
@@ -40,7 +42,19 @@ const CreateTimetable = () => {
     <MobileScreen>
       <FullScreenButtonTemplate
         content={
-          <TextField align="center" placeholder="시간표 제목을 입력하세요" onChange={(e) => setTitle(e.target.value)} />
+          <>
+            <Typography size="base" weight="bold">
+              새로운 시간표를 생성합니다.
+            </Typography>
+            <Margin size={20} />
+
+            <TextField
+              width="100%"
+              align="center"
+              placeholder="시간표 제목"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </>
         }
         button={
           <Button color="red" size="lg" disabled={disabled} onClick={() => mutation.mutate()}>
