@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const NameGrid = styled.div`
+const NameGrid = styled.div.attrs({
+  className: 'name-grid',
+})`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 8px;
