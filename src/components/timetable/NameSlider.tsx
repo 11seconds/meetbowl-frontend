@@ -6,9 +6,16 @@ type NameSliderProps = {
 };
 
 const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
   & div.name-grid {
     display: grid !important;
     // react-slick 을 위한 스타일 설정
+  }
+
+  & .slick-dots {
+    bottom: -20px !important;
   }
 `;
 

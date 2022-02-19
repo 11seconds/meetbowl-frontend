@@ -27,7 +27,7 @@ export const Default = () => (
       <SubmitterName color="#A32FFF" name="NAME 13" />
       <SubmitterName color="#3F46F7" name="NAME 14" />
       <SubmitterName color="#FFCC18" name="NAME 15" />
-      <SubmitterName color="#F23737" name="NAME 16" />
+      <SubmitterName color="#F23737" name="NAME 16" />w
       <SubmitterName color="#232323" name="NAME 17" />
       <SubmitterName color="#1ABC2A" name="NAME 18" />
     </NameGrid>

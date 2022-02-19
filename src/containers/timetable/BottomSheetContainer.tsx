@@ -14,10 +14,30 @@ import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
 import { useCallback, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
+import NameSlider from 'components/timetable/NameSlider';
 
 type BottomSheetContainerProps = {
   timetableId: string;
 };
+
+type SubmitterType = Pick<ScheduleBlockDto.ScheduleBlock, 'userId' | 'color' | 'nickname'>;
+
+function sliceArray<T>(array: T[], unit: number): T[][] {
+  const slicedArray: T[][] = [[]];
+
+  array.forEach((item) => {
+    const lastPage: unknown[] = slicedArray[slicedArray.length - 1];
+
+    if (lastPage.length < unit) {
+      lastPage.push(item);
+      return;
+    }
+
+    slicedArray.push([item]);
+  });
+
+  return slicedArray;
+}
 
 const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
   const [selectedSubmitterId, setSelectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
@@ -34,15 +54,12 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
   const submitters = useMemo(() => {
     if (!scheduleBlocks) return [];
 
-    return scheduleBlocks.reduce<Pick<ScheduleBlockDto.ScheduleBlock, 'userId' | 'color' | 'nickname'>[]>(
-      (acc, cur) => {
-        if (!acc.map((scheduleBlock) => scheduleBlock.userId).includes(cur.userId)) {
-          return [...acc, { userId: cur.userId, nickname: cur.nickname, color: cur.color }];
-        }
-        return acc;
-      },
-      []
-    );
+    return scheduleBlocks.reduce<SubmitterType[]>((acc, cur) => {
+      if (!acc.map((scheduleBlock) => scheduleBlock.userId).includes(cur.userId)) {
+        return [...acc, { userId: cur.userId, nickname: cur.nickname, color: cur.color }];
+      }
+      return acc;
+    }, []);
   }, [scheduleBlocks]);
 
   const handleSubmitterNameClick = useCallback(
@@ -74,17 +91,21 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
         </>
       }
       body={
-        <NameGrid>
-          {submitters.map((submitter) => (
-            <SubmitterName
-              key={submitter.userId}
-              color={submitter.color}
-              name={submitter.nickname}
-              highlighted={selectedSubmitterId === submitter.userId}
-              onClick={() => handleSubmitterNameClick(submitter.userId)}
-            />
+        <NameSlider>
+          {sliceArray<SubmitterType>(submitters, 9).map((page) => (
+            <NameGrid>
+              {page.map((submitter) => (
+                <SubmitterName
+                  key={submitter.userId}
+                  color={submitter.color}
+                  name={submitter.nickname}
+                  highlighted={selectedSubmitterId === submitter.userId}
+                  onClick={() => handleSubmitterNameClick(submitter.userId)}
+                />
+              ))}
+            </NameGrid>
           ))}
-        </NameGrid>
+        </NameSlider>
       }
     />
   );
