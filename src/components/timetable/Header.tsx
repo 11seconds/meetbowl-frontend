@@ -13,6 +13,12 @@ const Title = styled.div`
   flex-grow: 1;
 `;
 
+const Menu = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 type HeaderProps = {
   title: JSX.Element;
   menu?: JSX.Element;
@@ -21,7 +27,7 @@ type HeaderProps = {
 const Header = ({ title, menu }: HeaderProps) => (
   <Wrapper>
     <Title>{title}</Title>
-    <div>{menu}</div>
+    <Menu>{menu}</Menu>
   </Wrapper>
 );
 

@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { TimetableDto } from 'apis/dtos';
 import { timetable } from 'apis';
@@ -8,8 +9,9 @@ import Skeleton from 'react-loading-skeleton';
 
 import Header from 'components/timetable/Header';
 import Title from 'components/timetable/Title';
-// import Button from 'components/common/Button';
 import CircleButton from 'components/common/CircleButton';
+import Button from 'components/common/Button';
+import Margin from 'components/common/Margin';
 
 type HeaderContainerProps = {
   timetableId: string;
@@ -18,6 +20,7 @@ type HeaderContainerProps = {
 
 const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
   const { id: userId } = useCurrentUser();
+  const navigate = useNavigate();
 
   const {
     isLoading,
@@ -31,6 +34,10 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
     await timetable.updateTimetable({ id: timetableId as string, title });
     refetchTimetable();
   });
+
+  const handleNewClick = () => {
+    navigate('/');
+  };
 
   if (isError || (!isLoading && !data)) {
     if (error) onError(error);
@@ -53,8 +60,13 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
         )
       }
       menu={
-        <CircleButton color="red" icon="share" url={window.location.href} />
-        // <Button size="sm"> 저장 </Button>
+        <>
+          <CircleButton color="red" icon="share" url={window.location.href} />
+          <Margin direction="horizontal" size={12} />
+          <Button size="sm" onClick={handleNewClick}>
+            새 시간표
+          </Button>
+        </>
       }
     />
   );
