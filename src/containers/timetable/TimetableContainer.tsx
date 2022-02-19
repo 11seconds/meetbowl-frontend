@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 
 import useCurrentUser from 'hooks/useCurrentUser';
@@ -88,14 +87,14 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   );
 
   if (isLoading) return <ScreenSpinner />;
-  if (!currentUserId) return <Navigate to="/" />;
 
   // TODO: timetable 네이밍을 scheduleBlocks 로 변경
   return (
     <Timetable
       scheduleBlocks={timetable || []}
       selectedSubmitterId={selectedSubmitterId}
-      currentUserId={currentUserId}
+      currentUserId={currentUserId as string}
+      // 라우터에서 로그인 여부를 확인하기 때문에 타입 단언
       onClick={handleClick}
     />
   );
