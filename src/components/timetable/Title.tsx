@@ -38,7 +38,9 @@ const Title = ({ title, isEditable, onChange }: TitleProps) => {
     return (
       <TextField
         ref={textFieldRef}
+        width="100%"
         defaultValue={title}
+        placeholder="시간표 제목"
         onBlur={() => setModifying(false)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') setModifying(false);
