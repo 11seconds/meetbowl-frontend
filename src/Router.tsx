@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { getAccessToken, isTokenExisting, isTokenValid } from 'utils/token';
+import useRedirect from 'hooks/useRedirect';
 
 import CreateTimetable from 'pages/CreateTimetable';
 import SignIn from 'pages/SignIn';
@@ -13,10 +14,13 @@ type CustomRouteProps = {
 };
 
 const AuthRequired = ({ children }: CustomRouteProps): JSX.Element => {
+  const { pushRedirect } = useRedirect();
   const jwt = getAccessToken();
 
   if (!isTokenExisting() || !isTokenValid(jwt)) {
+    pushRedirect();
     return <Navigate to="/sign-in" />;
+    // 강제로 이동 (redirect 추가) -> authorization or signup 에서 리다이렉트 시켜주고 redirect 없앰
   }
 
   return children;
@@ -35,8 +39,6 @@ const UnauthRequired = ({ children }: CustomRouteProps): JSX.Element => {
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<CreateTimetable />} />
-      <Route path="/timetable/:timetableId" element={<Timetable />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/authorization" element={<Authorization />} />
 
@@ -51,10 +53,19 @@ const Router = () => (
 
       {/* Protected Route */}
       <Route
-        path="/auth-required"
+        path="/"
         element={
           <AuthRequired>
-            <div>helloM</div>
+            <CreateTimetable />
+          </AuthRequired>
+        }
+      />
+
+      <Route
+        path="/timetable/:timetableId"
+        element={
+          <AuthRequired>
+            <Timetable />
           </AuthRequired>
         }
       />
