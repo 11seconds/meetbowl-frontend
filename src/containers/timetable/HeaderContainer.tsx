@@ -9,6 +9,7 @@ import Skeleton from 'react-loading-skeleton';
 import Header from 'components/timetable/Header';
 import Title from 'components/timetable/Title';
 // import Button from 'components/common/Button';
+import CircleButton from 'components/common/CircleButton';
 
 type HeaderContainerProps = {
   timetableId: string;
@@ -51,7 +52,10 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
           <Skeleton width="100%" height="33px" />
         )
       }
-      // menu={<Button size="sm"> 저장 </Button>}
+      menu={
+        <CircleButton color="red" icon="share" url={window.location.href} />
+        // <Button size="sm"> 저장 </Button>
+      }
     />
   );
 };
