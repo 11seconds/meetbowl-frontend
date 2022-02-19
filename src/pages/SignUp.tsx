@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useCurrentUser from 'hooks/useCurrentUser';
+import useRedirect from 'hooks/useRedirect';
 import { user } from 'apis';
 
 import MobileScreen from 'components/common/MobileScreen';
@@ -13,17 +14,14 @@ import ScreenSpinner from 'components/common/ScreenSpinner';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const { popRedirect } = useRedirect();
 
   const { isLoading, isActive } = useCurrentUser();
   const [nickname, setNickname] = useState('');
 
+  // 닉네임 설정
   const mutation = useMutation(() => {
-    const redirectPath = searchParams.get('redirect');
-
-    if (redirectPath) navigate(redirectPath);
-    else navigate('/');
-
+    popRedirect();
     return user.updateNickname(nickname);
   });
 

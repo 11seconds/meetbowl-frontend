@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 
 import useCurrentUser from 'hooks/useCurrentUser';
@@ -17,7 +16,7 @@ type TimetableContainerProps = {
 };
 
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
-  const { isLoading, id: userId } = useCurrentUser();
+  const { isLoading, id: currentUserId } = useCurrentUser();
 
   const [selectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
 
@@ -77,25 +76,25 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
         return;
       }
 
-      if (scheduleBlock && scheduleBlock.userId === userId) {
+      if (scheduleBlock && scheduleBlock.userId === currentUserId) {
         deleteMutation.mutate({ id: scheduleBlock.id });
         return;
       }
 
       createMutation.mutate(cell);
     },
-    [createMutation, deleteMutation, userId]
+    [createMutation, deleteMutation, currentUserId]
   );
 
   if (isLoading) return <ScreenSpinner />;
-  if (!userId) return <Navigate to="/" />;
 
   // TODO: timetable 네이밍을 scheduleBlocks 로 변경
   return (
     <Timetable
       scheduleBlocks={timetable || []}
       selectedSubmitterId={selectedSubmitterId}
-      currentUserId={userId}
+      currentUserId={currentUserId as string}
+      // 라우터에서 로그인 여부를 확인하기 때문에 타입 단언
       onClick={handleClick}
     />
   );
