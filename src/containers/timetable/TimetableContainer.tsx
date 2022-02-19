@@ -17,7 +17,7 @@ type TimetableContainerProps = {
 };
 
 const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
-  const { isLoading, id: userId } = useCurrentUser();
+  const { isLoading, id: currentUserId } = useCurrentUser();
 
   const [selectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
 
@@ -77,25 +77,25 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
         return;
       }
 
-      if (scheduleBlock && scheduleBlock.userId === userId) {
+      if (scheduleBlock && scheduleBlock.userId === currentUserId) {
         deleteMutation.mutate({ id: scheduleBlock.id });
         return;
       }
 
       createMutation.mutate(cell);
     },
-    [createMutation, deleteMutation, userId]
+    [createMutation, deleteMutation, currentUserId]
   );
 
   if (isLoading) return <ScreenSpinner />;
-  if (!userId) return <Navigate to="/" />;
+  if (!currentUserId) return <Navigate to="/" />;
 
   // TODO: timetable 네이밍을 scheduleBlocks 로 변경
   return (
     <Timetable
       scheduleBlocks={timetable || []}
       selectedSubmitterId={selectedSubmitterId}
-      currentUserId={userId}
+      currentUserId={currentUserId}
       onClick={handleClick}
     />
   );
