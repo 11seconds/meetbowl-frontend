@@ -1,5 +1,7 @@
 import { useQuery, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { TimetableDto } from 'apis/dtos';
 import { timetable } from 'apis';
@@ -35,6 +37,10 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
     refetchTimetable();
   });
 
+  const handleCopy = () => {
+    toast('시간표 주소가 복사되었습니다.');
+  };
+
   const handleNewClick = () => {
     navigate('/');
   };
@@ -61,7 +67,9 @@ const HeaderContainer = ({ timetableId, onError }: HeaderContainerProps) => {
       }
       menu={
         <>
-          <CircleButton color="red" icon="share" url={window.location.href} />
+          <CopyToClipboard text={window.location.href} onCopy={handleCopy}>
+            <CircleButton color="red" icon="share" />
+          </CopyToClipboard>
           <Margin direction="horizontal" size={12} />
           <Button size="sm" onClick={handleNewClick}>
             새 시간표

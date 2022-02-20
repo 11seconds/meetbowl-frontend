@@ -11,6 +11,8 @@ import FullScreenButtonTemplate from 'components/templates/FullScreenButtonTempl
 import Button from 'components/common/Button';
 import TextField from 'components/common/TextField';
 import ScreenSpinner from 'components/common/ScreenSpinner';
+import Typography from 'components/common/Typography';
+import Margin from 'components/common/Margin';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -43,7 +45,17 @@ const SignUp = () => {
     <MobileScreen>
       <FullScreenButtonTemplate
         content={
-          <TextField align="center" placeholder="이름을 입력해주세요" onChange={(e) => setNickname(e.target.value)} />
+          <>
+            <Typography size="xl" weight="bold">
+              가입을 환영합니다.
+            </Typography>
+            <Margin direction="vertical" size={5} />
+
+            <Typography size="base"> 사용할 닉네임을 아래에 입력해주세요.</Typography>
+            <Margin direction="vertical" size={50} />
+
+            <TextField width="100%" align="center" placeholder="닉네임" onChange={(e) => setNickname(e.target.value)} />
+          </>
         }
         button={
           <Button color="red" size="lg" disabled={disabled} onClick={() => mutation.mutate()}>

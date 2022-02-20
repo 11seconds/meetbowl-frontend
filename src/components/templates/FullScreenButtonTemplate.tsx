@@ -13,6 +13,13 @@ const ContentWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -26,7 +33,9 @@ type FullScreenButtonTemplateProps = {
 
 const FullScreenButtonTemplate = ({ content, button }: FullScreenButtonTemplateProps) => (
   <Wrapper>
-    <ContentWrapper>{content}</ContentWrapper>
+    <ContentWrapper>
+      <div>{content}</div>
+    </ContentWrapper>
     <ButtonWrapper>{button}</ButtonWrapper>
   </Wrapper>
 );
