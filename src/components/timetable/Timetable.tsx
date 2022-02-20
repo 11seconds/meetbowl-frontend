@@ -64,12 +64,17 @@ const getCellColor = (
   const scheduleBlock = findScheduleBlocksByCell(scheduleBlocks, cell);
   if (scheduleBlock) return 'gray';
 
-  return 'default';
+  return null;
 };
 
 // cell: UI 에서의 칸
 // scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
 const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick }: TimetableProps) => {
+  const handleCellClick = (currentCell: CellType) => {
+    window.navigator.vibrate(50);
+    onClick(currentCell, findScheduleBlockByCellAndUserId(scheduleBlocks, currentCell, currentUserId));
+  };
+
   return (
     <CellGrid>
       <Cell />
@@ -99,14 +104,7 @@ const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick
 
               const cellColor = getCellColor(scheduleBlocks, currentCell, currentUserId, selectedSubmitterId);
 
-              return (
-                <Cell
-                  onClick={() =>
-                    onClick(currentCell, findScheduleBlockByCellAndUserId(scheduleBlocks, currentCell, currentUserId))
-                  }
-                  color={cellColor}
-                />
-              );
+              return <Cell onClick={() => handleCellClick(currentCell)} color={cellColor} />;
             })}
           </>
         );
