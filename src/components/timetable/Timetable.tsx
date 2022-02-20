@@ -64,7 +64,7 @@ const getCellColor = (
   const scheduleBlock = findScheduleBlocksByCell(scheduleBlocks, cell);
   if (scheduleBlock) return 'gray';
 
-  return 'default';
+  return null;
 };
 
 // cell: UI 에서의 칸
