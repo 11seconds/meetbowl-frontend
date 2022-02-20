@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { MdClose } from 'react-icons/md';
 
 // TODO: Storybook 작성
 
@@ -7,7 +8,7 @@ type CellProps = {
   color?: 'default' | 'gray' | string;
 };
 
-const Cell = styled.div<CellProps>`
+const Wrapper = styled.div<CellProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,12 +28,6 @@ const Cell = styled.div<CellProps>`
     `};
 
   ${(props) =>
-    props.color === 'default' &&
-    css`
-      background-color: '#ffffff';
-    `}
-
-  ${(props) =>
     props.color === 'gray' &&
     css`
       background-color: ${props.theme.colors.specific.disabled};
@@ -46,8 +41,25 @@ const Cell = styled.div<CellProps>`
     `}
 `;
 
-Cell.defaultProps = {
+Wrapper.defaultProps = {
   header: false,
 };
+
+const Icon = styled.span`
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.2);
+`;
+
+const Cell = ({ ...rest }) => (
+  <Wrapper {...rest}>
+    {!rest.color ? (
+      rest.children
+    ) : (
+      <Icon>
+        <MdClose />
+      </Icon>
+    )}
+  </Wrapper>
+);
 
 export default Cell;
