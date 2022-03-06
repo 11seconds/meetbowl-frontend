@@ -71,7 +71,10 @@ const getCellColor = (
 // scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
 const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick }: TimetableProps) => {
   const handleCellClick = (currentCell: CellType) => {
-    window.navigator.vibrate(50);
+    if (window.navigator.vibrate) {
+      window.navigator.vibrate(50);
+    }
+
     onClick(currentCell, findScheduleBlockByCellAndUserId(scheduleBlocks, currentCell, currentUserId));
   };
 
