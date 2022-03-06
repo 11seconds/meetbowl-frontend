@@ -67,3 +67,9 @@ export const selectAllDay = async ({ timetableId, day }: ScheduleBlockDto.Select
     params: { timetableId, day },
   });
 };
+
+export const selectAllTime = async ({ timetableId, startTime }: ScheduleBlockDto.SelectAllTime) => {
+  await axios.post('/scheduleblocks/time', null, {
+    params: { timetableId, startTime },
+  });
+};

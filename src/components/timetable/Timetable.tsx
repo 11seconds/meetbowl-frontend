@@ -82,6 +82,11 @@ const Timetable = ({ timetableId, scheduleBlocks, selectedSubmitterId, currentUs
     refetch();
   });
 
+  const selectAllTime = useMutation(async (startTime: number) => {
+    await apis.scheduleBlock.selectAllTime({ timetableId, startTime });
+    refetch();
+  });
+
   const handleCellClick = (currentCell: CellType) => {
     if (window.navigator.vibrate) {
       window.navigator.vibrate(50);
@@ -120,7 +125,9 @@ const Timetable = ({ timetableId, scheduleBlocks, selectedSubmitterId, currentUs
 
         return (
           <>
-            <Cell header> {startTime} </Cell>
+            <Cell header onClick={() => selectAllTime.mutate(startTime)}>
+              {startTime}
+            </Cell>
 
             {Array.from([1, 2, 3, 4, 5, 6, 0]).map((day) => {
               const currentCell: CellType = {
