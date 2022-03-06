@@ -41,7 +41,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
       day: number;
     }): Promise<void> => {
       await apis.scheduleBlock.createScheduleBlock({
-        tableId: timetableId,
+        timetableId,
         startTime,
         startMinute: 0,
         endTime: startTime,
@@ -91,6 +91,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
   // TODO: timetable 네이밍을 scheduleBlocks 로 변경
   return (
     <Timetable
+      timetableId={timetableId}
       scheduleBlocks={timetable || []}
       selectedSubmitterId={selectedSubmitterId}
       currentUserId={currentUserId as string}

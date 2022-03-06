@@ -10,10 +10,17 @@ const Button = styled.button<{
   inline?: boolean;
   disabled?: boolean;
 }>`
+  align-items: center;
   border: none;
   border-radius: ${(props) => props.theme.sizes.borderRadius};
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+
+  & svg {
+    margin-right: 3px;
+    width: 16px;
+    height: 16px;
+  }
 
   ${(props) =>
     props.color === 'red' &&
@@ -56,7 +63,7 @@ const Button = styled.button<{
         `
       : css`
           width: 100%;
-          display: block;
+          display: flex;
         `}
 `;
 

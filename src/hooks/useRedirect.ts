@@ -15,6 +15,8 @@ const useRedirect = () => {
     if (redirectPath) {
       localStorage.removeItem(REDIRECT_PATH_KEY);
       navigate(redirectPath);
+    } else {
+      navigate('/');
     }
   };
 
