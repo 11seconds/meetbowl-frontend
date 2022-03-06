@@ -16,11 +16,13 @@ customAxios.interceptors.request.use(
 
     // camelCase 를 snake_case 로 변경
     const decamelizedData = decamelizeKeys(config.data);
+    const decamelizedParams = decamelizeKeys(config.params);
 
     return {
       ...config,
       headers: { ...config.headers, ...customHeaders },
       data: decamelizedData,
+      params: decamelizedParams,
     };
   },
   (error: AxiosError) => {

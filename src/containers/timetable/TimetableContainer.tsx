@@ -41,7 +41,7 @@ const TimetableContainer = ({ timetableId }: TimetableContainerProps) => {
       day: number;
     }): Promise<void> => {
       await apis.scheduleBlock.createScheduleBlock({
-        tableId: timetableId,
+        timetableId,
         startTime,
         startMinute: 0,
         endTime: startTime,

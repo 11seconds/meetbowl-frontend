@@ -9,7 +9,7 @@ export const getScheduleBlocksByTimetableId = async (
 };
 
 export const createScheduleBlock = async ({
-  tableId,
+  timetableId,
   startTime,
   startMinute,
   endTime,
@@ -18,7 +18,7 @@ export const createScheduleBlock = async ({
   label,
 }: ScheduleBlockDto.CreateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
   const res = await axios.post('/scheduleblocks', {
-    tableId,
+    tableId: timetableId,
     startTime,
     startMinute,
     endTime,
@@ -30,14 +30,14 @@ export const createScheduleBlock = async ({
 };
 
 export const updateScheduleBlock = async ({
-  tableId,
+  timetableId,
   startTime,
   endTime,
   day,
   label,
 }: ScheduleBlockDto.UpdateRequest): Promise<ScheduleBlockDto.ScheduleBlock[]> => {
   const res = await axios.put('/scheduleblocks', {
-    tableId,
+    tableId: timetableId,
     startTime,
     endTime,
     day,
@@ -48,4 +48,16 @@ export const updateScheduleBlock = async ({
 
 export const deleteScheduleBlock = async ({ id }: ScheduleBlockDto.DeleteRequest) => {
   await axios.delete(`/scheduleblocks/${id}`);
+};
+
+export const selectAll = async ({ timetableId }: ScheduleBlockDto.SelectAll) => {
+  await axios.post('/scheduleblocks/all', null, {
+    params: { timetableId },
+  });
+};
+
+export const unselectAll = async ({ timetableId }: ScheduleBlockDto.UnselectAll) => {
+  await axios.delete('/scheduleblocks/all', {
+    params: { timetableId },
+  });
 };

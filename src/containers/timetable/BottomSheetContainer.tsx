@@ -1,20 +1,22 @@
-import { useQuery } from 'react-query';
+import { useCallback, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
+import { useQuery, useMutation } from 'react-query';
 
 import * as apis from 'apis';
+import useCurrentUser from 'hooks/useCurrentUser';
 import { ScheduleBlockDto } from 'apis/dtos';
+
+import { MdSelectAll, MdRemoveCircleOutline } from 'react-icons/md';
 
 import * as timetableState from 'states/timetableState';
 
-// import Margin from 'components/common/Margin';
-// import Flex from 'components/common/Flex';
+import Flex from 'components/common/Flex';
 import Typography from 'components/common/Typography';
 import BottomSheet from 'components/timetable/BottomSheet';
-// import Toggle from 'components/common/Toggle';
 import NameGrid from 'components/timetable/NameGrid';
 import SubmitterName from 'components/timetable/SubmitterName';
-import { useCallback, useMemo } from 'react';
-import { useRecoilState } from 'recoil';
 import NameSlider from 'components/timetable/NameSlider';
+import Button from 'components/common/Button';
 
 type BottomSheetContainerProps = {
   timetableId: string;
@@ -40,15 +42,21 @@ function sliceArray<T>(array: T[], unit: number): T[][] {
 }
 
 const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
+  const { id: currentUserId } = useCurrentUser();
   const [selectedSubmitterId, setSelectedSubmitterId] = useRecoilState(timetableState.selectedSubmitterId);
 
-  const { data: scheduleBlocks } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
+  const { data: scheduleBlocks, refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>(
     'getSchedulblocks',
     () => apis.scheduleBlock.getScheduleBlocksByTimetableId(timetableId as string),
     {
       refetchInterval: 3000,
     }
   );
+
+  const scheduleBlocksOfCurrentUser = useMemo(() => {
+    if (!scheduleBlocks || !currentUserId) return [];
+    return scheduleBlocks.filter((block) => block.userId === currentUserId);
+  }, [scheduleBlocks, currentUserId]);
 
   // TODO: 정렬
   const submitters = useMemo(() => {
@@ -74,6 +82,16 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
     [selectedSubmitterId, setSelectedSubmitterId]
   );
 
+  const selectAll = useMutation(async () => {
+    await apis.scheduleBlock.selectAll({ timetableId });
+    refetch();
+  });
+
+  const unselectAll = useMutation(async () => {
+    await apis.scheduleBlock.unselectAll({ timetableId });
+    refetch();
+  });
+
   return (
     <BottomSheet
       header={
@@ -81,13 +99,17 @@ const BottomSheetContainer = ({ timetableId }: BottomSheetContainerProps) => {
           <Typography size="base" weight="bold">
             {submitters.length} 명 제출
           </Typography>
-          {/* <Flex align="center">
-            <Typography size="sm" weight="medium" color="red">
-              모두 선택
-            </Typography>
-            <Margin direction="horizontal" size={8} />
-            <Toggle />
-          </Flex> */}
+          <Flex align="center">
+            {scheduleBlocksOfCurrentUser.length > 0 ? (
+              <Button size="sm" onClick={() => unselectAll.mutate()}>
+                <MdRemoveCircleOutline /> 전체 삭제
+              </Button>
+            ) : (
+              <Button size="sm" onClick={() => selectAll.mutate()}>
+                <MdSelectAll /> 전체 선택
+              </Button>
+            )}
+          </Flex>
         </>
       }
       body={
