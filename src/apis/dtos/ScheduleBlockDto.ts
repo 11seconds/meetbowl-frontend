@@ -26,3 +26,5 @@ export type DeleteRequest = Pick<ScheduleBlock, 'id'>;
 export type SelectAll = Pick<ScheduleBlock, 'timetableId'>;
 
 export type UnselectAll = Pick<ScheduleBlock, 'timetableId'>;
+
+export type SelectAllDay = Pick<ScheduleBlock, 'timetableId' | 'day'>;

@@ -1,3 +1,7 @@
+import { useQuery, useMutation } from 'react-query';
+
+import * as apis from 'apis';
+
 import { ScheduleBlockDto } from 'apis/dtos';
 import CellGrid from './CellGrid';
 import Cell from './Cell';
@@ -16,6 +20,7 @@ type CellType = {
 };
 
 type TimetableProps = {
+  timetableId: string;
   scheduleBlocks: ScheduleBlockDto.ScheduleBlock[];
   currentUserId: string;
   selectedSubmitterId: string | null;
@@ -69,7 +74,14 @@ const getCellColor = (
 
 // cell: UI 에서의 칸
 // scheduleBlock: cell 에 대응되는 scheduleBlock 객체. 없을 수 있음.
-const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick }: TimetableProps) => {
+const Timetable = ({ timetableId, scheduleBlocks, selectedSubmitterId, currentUserId, onClick }: TimetableProps) => {
+  const { refetch } = useQuery<ScheduleBlockDto.ScheduleBlock[] | null, Error>('getSchedulblocks');
+
+  const selectAllDay = useMutation(async (day: number) => {
+    await apis.scheduleBlock.selectAllDay({ timetableId, day });
+    refetch();
+  });
+
   const handleCellClick = (currentCell: CellType) => {
     if (window.navigator.vibrate) {
       window.navigator.vibrate(50);
@@ -81,13 +93,27 @@ const Timetable = ({ scheduleBlocks, selectedSubmitterId, currentUserId, onClick
   return (
     <CellGrid>
       <Cell />
-      <Cell header> 월 </Cell>
-      <Cell header> 화 </Cell>
-      <Cell header> 수 </Cell>
-      <Cell header> 목 </Cell>
-      <Cell header> 금 </Cell>
-      <Cell header> 토 </Cell>
-      <Cell header> 일 </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(1)}>
+        월
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(2)}>
+        화
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(3)}>
+        수
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(4)}>
+        목
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(5)}>
+        금
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(6)}>
+        토
+      </Cell>
+      <Cell header onClick={() => selectAllDay.mutate(0)}>
+        일
+      </Cell>
 
       {Array.from(new Array(18)).map((_, i) => {
         const startTime = i + START_HOUR;
